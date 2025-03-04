@@ -40,7 +40,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start the globe visualization and load GeoJSON data
     initGeoJsonData();
-    animateGlobe();
+    animateGlobe(); // Initialize the quiz game once the document has loaded
+
+
+    console.log()
+    // Small delay to ensure globe is initialized first
+    setTimeout(function () {
+        console.log("Initializing quiz game elements...");
+        initQuizElements();
+    }, 1000);
+
 });
 
 // Initialize the canvas
@@ -263,8 +272,7 @@ function processPointForHover(clientX, clientY) {
             // Get property names based on your GeoJSON structure
             const name = hoveredFeature.properties.name || hoveredFeature.properties.NAME || "Unknown";
             const code = hoveredFeature.properties.code || hoveredFeature.properties.ISO_A3 || "Unknown";
-            const population = hoveredFeature.properties.population || hoveredFeature.properties.POP_EST || "N/A";
-            const continent = hoveredFeature.properties.continent || hoveredFeature.properties.CONTINENT || "Unknown";
+
 
             // Show tooltip with country info
 
@@ -760,6 +768,9 @@ function drawCountries() {
 }
 
 // Draw a polygon (country outline)
+// Modify the drawPolygon function to support quiz game highlighting
+// This replaces the existing drawPolygon function in globe.js
+
 function drawPolygon(coordinates, countryCode) {
     if (!coordinates || coordinates.length === 0) return;
 
@@ -782,8 +793,14 @@ function drawPolygon(coordinates, countryCode) {
     const isClicked = lastClickedLocation &&
         lastClickedLocation.code === countryCode;
 
-    // Check if this country is selected in the game
+    // Check if this country is selected in the population game
     const isGameSelected = gameActive && gameSelectedCountries.includes(countryCode);
+
+    // Check if this country is selected in the quiz game
+    const isQuizSelected = quizActive && quizSelectedCountries.some(country => country.code === countryCode);
+
+    // Check if this country is a correct answer in the quiz game
+    const isQuizCorrect = quizActive && quizCorrectCountries.includes(countryCode);
 
     // Draw all rings in the polygon
     for (const ring of coordinates) {
@@ -813,8 +830,18 @@ function drawPolygon(coordinates, countryCode) {
             }
         }
 
-        // Apply different styles based on hover/click/selected state
-        if (isGameSelected) {
+        // Apply different styles based on state
+        if (isQuizCorrect) {
+            // Correct answer in quiz - bright green
+            ctx.fillStyle = `rgba(76, 175, 80, 0.8)`; // Green for correct answers
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1.0)'; // White outline
+            ctx.lineWidth = 3;
+        } else if (isQuizSelected) {
+            // Selected in quiz - orange highlight
+            ctx.fillStyle = `rgba(255, 140, 0, 0.8)`; // Quiz orange
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1.0)'; // White outline
+            ctx.lineWidth = 3;
+        } else if (isGameSelected) {
             // Game selection style - bright highlight with gold outline
             ctx.fillStyle = `${color}EE`; // More opaque
             ctx.strokeStyle = 'rgba(255, 215, 0, 1.0)'; // Gold outline
@@ -834,7 +861,8 @@ function drawPolygon(coordinates, countryCode) {
         ctx.fill();
         ctx.stroke();
     }
-}// Draw grid lines (latitude/longitude)
+}
+
 function drawGridLines() {
     // Draw latitude lines
     for (let lat = -80; lat <= 80; lat += 20) {

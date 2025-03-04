@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="" />
+    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +24,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Redon Cela" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "reddyCe"
+  }
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/reddyCe/redon-reddit-dev.git",
@@ -72,12 +89,36 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740832562486</updated>
-      <workItem from="1740832563522" duration="45735000" />
+      <workItem from="1740832563522" duration="47893000" />
     </task>
+    <task id="LOCAL-00001" summary="first commit">
+      <option name="closed" value="true" />
+      <created>1741118070030</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1741118070030</updated>
+    </task>
+    <task id="LOCAL-00002" summary="remove game">
+      <option name="closed" value="true" />
+      <created>1741118103538</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1741118103538</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <MESSAGE value="remove game" />
+    <MESSAGE value="add quiz game" />
+    <option name="LAST_COMMIT_MESSAGE" value="add quiz game" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -90,7 +131,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/webroot/scripts/globe/globe.js</url>
-          <line>668</line>
+          <line>676</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
