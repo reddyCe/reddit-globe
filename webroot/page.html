@@ -10,11 +10,90 @@
 <div id="canvas-container"></div>
 <div id="loading">Loading globe data...</div>
 
+<div id="arcade-game-selector" class="game-selector">
+    <!-- Population Game Block -->
+    <div id="population-game" class="game-block population-game">
+        <h3 class="game-title">POPULATION TARGET</h3>
+        <p class="game-desc">Match the target population by selecting countries</p>
+        <div class="game-score">KARMA: <span id="population-score">0</span></div>
+    </div>
+
+    <!-- Quiz Game Block -->
+    <div id="quiz-game" class="game-block quiz-game">
+        <h3 class="game-title">GEOGRAPHY QUIZ</h3>
+        <p class="game-desc">Test your knowledge of countries and geography</p>
+        <div class="game-score">SCORE: <span id="quiz-score">0</span></div>
+    </div>
+</div>
+
+<!-- Animated target display -->
 <div id="animated-target-container">
   <div id="animated-target-display"></div>
 </div>
 
+<!-- Country tooltip -->
 <div id="tooltip"></div>
+
+<!-- Population Game UI -->
+<div id="minimized-selection-panel">
+    <h5 class="game-title">r/PopulationTarget</h5>
+
+    <div class="info-container">
+        <span class="info-label">Target:</span>
+        <span id="mini-target-value" class="info-value">0</span>
+    </div>
+
+    <div class="info-container">
+        <span class="info-label">Karma:</span>
+        <span id="score" class="info-value">0</span>
+    </div>
+
+    <div id="mini-selected-container">
+        <div class="selection-label">Selected Countries (<span id="max-countries"></span> max):</div>
+        <!-- Selected countries will be added here dynamically -->
+    </div>
+
+    <div class="info-container">
+        <div>
+            <span class="info-label">Sum: </span>
+            <span id="mini-sum-value" class="info-value-normal">0</span>
+        </div>
+        <div>
+            <span class="info-label">Diff: </span>
+            <span id="mini-diff-value" class="info-value-normal">0</span>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button id="reset-button" class="button-secondary" disabled>Reset</button>
+        <button id="start-button" class="button-primary">Start Game</button>
+    </div>
+</div>
+
+<!-- Quiz Game UI -->
+<div id="quiz-panel">
+    <h4 class="quiz-title">Geography Quiz</h4>
+    <div id="difficulty-badge" class="difficulty-badge">Medium</div>
+
+    <div id="question-container" class="question-container">
+        <!-- Question will be added here dynamically -->
+    </div>
+
+    <div class="counter-container">
+        <span class="counter-label">Selected countries:</span>
+        <span id="quiz-selection-count" class="counter-value">0 / 0</span>
+    </div>
+
+    <div id="quiz-selected-container">
+        <div class="no-selection-message">Click on countries to select them</div>
+        <!-- Selected countries will be added here dynamically -->
+    </div>
+
+    <div class="button-container">
+        <button id="quiz-reset-button" class="button-secondary">Reset</button>
+        <button id="quiz-submit-button" class="button-primary quiz-button-primary">Submit Answer</button>
+    </div>
+</div>
 
 <!-- Load the original globe visualization JavaScript -->
 <script src="scripts/globe/globe.js"></script>
@@ -27,7 +106,5 @@
 
 <!-- Load the quiz game JavaScript -->
 <script src="scripts/games/quiz/main.js"></script>
-
-
 </body>
 </html>

@@ -1,178 +1,15 @@
 // Initialize game UI elements with Reddit-like styling
 function initGameElements() {
-    // We'll only use the minimized panel, making it more functional
-    minimizedSelectionPanel = document.createElement('div');
-    minimizedSelectionPanel.id = 'minimized-selection-panel';
-    minimizedSelectionPanel.style.position = 'absolute';
-    minimizedSelectionPanel.style.bottom = '20px';
-    minimizedSelectionPanel.style.right = '20px';
-    minimizedSelectionPanel.style.width = '280px'; // Slightly wider for more info
-    minimizedSelectionPanel.style.backgroundColor = '#1A1A1B'; // Reddit dark mode background
-    minimizedSelectionPanel.style.color = '#D7DADC'; // Reddit text color
-    minimizedSelectionPanel.style.padding = '10px';
-    minimizedSelectionPanel.style.borderRadius = '4px';
-    minimizedSelectionPanel.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.3)';
-    minimizedSelectionPanel.style.zIndex = '1000';
-    minimizedSelectionPanel.style.fontFamily = '"Noto Sans", "Helvetica Neue", Arial, sans-serif'; // Reddit font
-    minimizedSelectionPanel.style.fontSize = '12px'; // Slightly larger font
+    // Reference existing UI elements from HTML
+    minimizedSelectionPanel = document.getElementById('minimized-selection-panel');
+    startButton = document.getElementById('start-button');
+    resetButton = document.getElementById('reset-button');
+
+    // Set the maximum number of countries in the selection label
+    document.getElementById('max-countries').textContent = NUMBER_OF_COUNTRIES;
+
+    // Hide the panel initially
     minimizedSelectionPanel.style.display = 'none';
-    minimizedSelectionPanel.style.border = '1px solid #343536'; // Reddit card border
-
-    // Game title
-    const gameTitle = document.createElement('h5');
-    gameTitle.textContent = 'r/PopulationTarget';
-    gameTitle.style.textAlign = 'center';
-    gameTitle.style.margin = '0 0 8px 0';
-    gameTitle.style.color = '#FF4500'; // Reddit orange
-    gameTitle.style.fontWeight = '500';
-    gameTitle.style.fontSize = '14px';
-    minimizedSelectionPanel.appendChild(gameTitle);
-
-    // Target info in panel
-    const miniTargetInfo = document.createElement('div');
-    miniTargetInfo.style.display = 'flex';
-    miniTargetInfo.style.justifyContent = 'space-between';
-    miniTargetInfo.style.marginBottom = '5px';
-    miniTargetInfo.style.fontSize = '12px';
-    miniTargetInfo.style.fontWeight = 'bold';
-    miniTargetInfo.style.padding = '5px';
-    miniTargetInfo.style.backgroundColor = '#272729';
-    miniTargetInfo.style.borderRadius = '4px';
-    miniTargetInfo.style.border = '1px solid #343536';
-
-    const miniTargetLabel = document.createElement('span');
-    miniTargetLabel.textContent = 'Target:';
-    miniTargetLabel.style.color = '#818384';
-    miniTargetInfo.appendChild(miniTargetLabel);
-
-    const miniTargetValue = document.createElement('span');
-    miniTargetValue.id = 'mini-target-value';
-    miniTargetValue.textContent = '0';
-    miniTargetValue.style.color = '#FF4500'; // Reddit orange
-    miniTargetInfo.appendChild(miniTargetValue);
-
-    minimizedSelectionPanel.appendChild(miniTargetInfo);
-
-    // Score display in panel
-    const scoreContainer = document.createElement('div');
-    scoreContainer.style.display = 'flex';
-    scoreContainer.style.justifyContent = 'space-between';
-    scoreContainer.style.marginBottom = '5px';
-    scoreContainer.style.padding = '5px';
-    scoreContainer.style.backgroundColor = '#272729';
-    scoreContainer.style.borderRadius = '4px';
-    scoreContainer.style.border = '1px solid #343536';
-
-    const scoreLabel = document.createElement('span');
-    scoreLabel.textContent = 'Karma:';
-    scoreLabel.style.color = '#818384';
-    scoreContainer.appendChild(scoreLabel);
-
-    const scoreDisplay = document.createElement('span');
-    scoreDisplay.id = 'score';
-    scoreDisplay.style.fontWeight = 'bold';
-    scoreDisplay.style.color = '#FF4500';
-    scoreDisplay.textContent = '0';
-    scoreContainer.appendChild(scoreDisplay);
-
-    minimizedSelectionPanel.appendChild(scoreContainer);
-
-    // Container for selected countries
-    const miniSelectedContainer = document.createElement('div');
-    miniSelectedContainer.id = 'mini-selected-container';
-    miniSelectedContainer.style.marginBottom = '5px';
-    miniSelectedContainer.style.backgroundColor = '#272729';
-    miniSelectedContainer.style.borderRadius = '4px';
-    miniSelectedContainer.style.padding = '5px';
-    miniSelectedContainer.style.border = '1px solid #343536';
-    minimizedSelectionPanel.appendChild(miniSelectedContainer);
-
-    // Add a label for the selected countries
-    const selectionLabel = document.createElement('div');
-    selectionLabel.textContent = `Selected Countries (${NUMBER_OF_COUNTRIES} max):`;
-    selectionLabel.style.fontSize = '11px';
-    selectionLabel.style.color = '#818384';
-    selectionLabel.style.padding = '2px 3px';
-    selectionLabel.style.marginBottom = '3px';
-    miniSelectedContainer.appendChild(selectionLabel);
-
-    // Summary info in panel
-    const miniSummaryInfo = document.createElement('div');
-    miniSummaryInfo.style.display = 'flex';
-    miniSummaryInfo.style.justifyContent = 'space-between';
-    miniSummaryInfo.style.padding = '5px';
-    miniSummaryInfo.style.fontSize = '12px';
-    miniSummaryInfo.style.backgroundColor = '#272729';
-    miniSummaryInfo.style.borderRadius = '4px';
-    miniSummaryInfo.style.border = '1px solid #343536';
-
-    const miniSumContainer = document.createElement('div');
-    miniSumContainer.style.display = 'flex';
-    const miniSumLabel = document.createElement('span');
-    miniSumLabel.textContent = 'Sum:  ';
-    miniSumLabel.style.color = '#818384';
-    miniSumContainer.appendChild(miniSumLabel);
-
-    const miniSumValue = document.createElement('span');
-    miniSumValue.id = 'mini-sum-value';
-    miniSumValue.textContent = '0';
-    miniSumContainer.appendChild(miniSumValue);
-    miniSummaryInfo.appendChild(miniSumContainer);
-
-    const miniDiffContainer = document.createElement('div');
-    miniDiffContainer.style.display = 'flex';
-    const miniDiffLabel = document.createElement('span');
-    miniDiffLabel.textContent = 'Diff: ';
-    miniDiffLabel.style.color = '#818384';
-    miniDiffContainer.appendChild(miniDiffLabel);
-
-    const miniDiffValue = document.createElement('span');
-    miniDiffValue.id = 'mini-diff-value';
-    miniDiffValue.textContent = '0';
-    miniDiffContainer.appendChild(miniDiffValue);
-    miniSummaryInfo.appendChild(miniDiffContainer);
-
-    minimizedSelectionPanel.appendChild(miniSummaryInfo);
-
-    // Controls for panel
-    const miniControls = document.createElement('div');
-    miniControls.style.display = 'flex';
-    miniControls.style.justifyContent = 'space-between';
-    miniControls.style.marginTop = '5px';
-
-    resetButton = document.createElement('button');
-    resetButton.textContent = 'Reset';
-    resetButton.style.backgroundColor = '#272729';
-    resetButton.style.color = '#D7DADC';
-    resetButton.style.border = '1px solid #343536';
-    resetButton.style.padding = '6px 10px';
-    resetButton.style.borderRadius = '20px';
-    resetButton.style.fontSize = '12px';
-    resetButton.style.cursor = 'pointer';
-    resetButton.style.width = '48%';
-    resetButton.disabled = true;
-    resetButton.style.opacity = '0.5';
-    miniControls.appendChild(resetButton);
-
-    startButton = document.createElement('button');
-    startButton.textContent = 'Start Game';
-    startButton.style.backgroundColor = '#FF4500';
-    startButton.style.color = 'white';
-    startButton.style.border = 'none';
-    startButton.style.padding = '6px 10px';
-    startButton.style.borderRadius = '20px';
-    startButton.style.fontSize = '12px';
-    startButton.style.cursor = 'pointer';
-    startButton.style.width = '48%';
-    startButton.style.fontWeight = 'bold';
-    miniControls.appendChild(startButton);
-
-    minimizedSelectionPanel.appendChild(miniControls);
-    document.body.appendChild(minimizedSelectionPanel);
-
-    // Create animated target display element that will appear in the middle
-    const animatedTargetContainer = document.getElementById('animated-target-container');
-    document.body.appendChild(animatedTargetContainer);
 }
 
 function quitGame() {
@@ -186,10 +23,9 @@ function quitGame() {
     // Update UI
     startButton.textContent = 'Start Game';
     resetButton.disabled = true;
-    resetButton.style.opacity = '0.5';
+    resetButton.classList.add('disabled');
     needsRedraw = true; // Clear the globe selection
 }
-
 
 function showAnimatedTarget(population) {
     const container = document.getElementById('animated-target-container');
@@ -282,36 +118,27 @@ function updateSelectedCountriesDisplay() {
     selectedCountries.forEach((country, index) => {
         totalPopulation += country.population;
 
-        // Update mini panel display
+        // Create country element
         const miniCountryElement = document.createElement('div');
-        miniCountryElement.style.display = 'flex';
-        miniCountryElement.style.justifyContent = 'space-between';
-        miniCountryElement.style.padding = '3px 5px';
-        miniCountryElement.style.fontSize = '11px';
+        miniCountryElement.className = 'country-item';
         if (index < selectedCountries.length - 1) {
-            miniCountryElement.style.borderBottom = '1px solid #343536';
+            miniCountryElement.classList.add('country-border-bottom');
         }
 
         // Add vote arrows (decorative) to mimic Reddit style
         const miniVote = document.createElement('span');
         miniVote.textContent = '▲';
-        miniVote.style.color = '#FF4500';
-        miniVote.style.marginRight = '3px';
-        miniVote.style.fontSize = '9px';
+        miniVote.className = 'country-vote';
         miniCountryElement.appendChild(miniVote);
 
         const miniNameElement = document.createElement('span');
         miniNameElement.textContent = country.name;
-        miniNameElement.style.overflow = 'hidden';
-        miniNameElement.style.textOverflow = 'ellipsis';
-        miniNameElement.style.whiteSpace = 'nowrap';
-        miniNameElement.style.maxWidth = '130px';
-        miniNameElement.style.flex = '1';
+        miniNameElement.className = 'country-name';
         miniCountryElement.appendChild(miniNameElement);
 
         const miniPopElement = document.createElement('span');
         miniPopElement.textContent = formatNumber(country.population);
-        miniPopElement.style.color = '#818384';
+        miniPopElement.className = 'country-population';
         miniCountryElement.appendChild(miniPopElement);
 
         miniContainer.appendChild(miniCountryElement);
@@ -341,48 +168,27 @@ function updateSelectedCountriesDisplay() {
 
     document.getElementById('mini-diff-value').style.color = diffColor;
 }
+
 // Show round results of the round
 function showRoundResults(totalPopulation, difference, roundScore) {
-    // Create a result modal - like a Reddit post
+    // Create modal element
     const modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.top = '50%';
-    modal.style.left = '50%';
-    modal.style.transform = 'translate(-50%, -50%)';
-    modal.style.backgroundColor = '#1A1A1B'; // Reddit dark mode
-    modal.style.padding = '20px';
-    modal.style.borderRadius = '4px';
-    modal.style.color = '#D7DADC'; // Reddit text color
-    modal.style.zIndex = '2000';
-    modal.style.minWidth = '300px';
-    modal.style.textAlign = 'center';
-    modal.style.boxShadow = '0 0 15px rgba(0, 0, 0, 0.5)';
-    modal.style.border = '1px solid #343536'; // Reddit card border
+    modal.className = 'modal';
 
     // Add content
     const title = document.createElement('h2');
     title.textContent = 'Round Results';
-    title.style.color = '#FF4500'; // Reddit orange
-    title.style.marginTop = '0';
-    title.style.fontWeight = '500';
-    title.style.fontSize = '18px';
+    title.className = 'modal-title';
     modal.appendChild(title);
 
     // Add a decorative Reddit header
     const redditHeader = document.createElement('div');
-    redditHeader.style.fontSize = '12px';
-    redditHeader.style.color = '#818384';
-    redditHeader.style.marginBottom = '15px';
-    redditHeader.style.textAlign = 'left';
+    redditHeader.className = 'modal-header';
     redditHeader.textContent = 'Posted by u/PopulationGame • 1m • Free Award';
     modal.appendChild(redditHeader);
 
-    const resultsList = document.createElement('div'); // using div instead of ul for Reddit style
-    resultsList.style.padding = '0';
-    resultsList.style.textAlign = 'left';
-    resultsList.style.backgroundColor = '#272729'; // Reddit card background
-    resultsList.style.borderRadius = '4px';
-    resultsList.style.border = '1px solid #343536'; // Reddit card border
+    const resultsList = document.createElement('div');
+    resultsList.className = 'results-list';
 
     const items = [
         `Target: ${formatNumber(targetPopulation)}`,
@@ -393,33 +199,24 @@ function showRoundResults(totalPopulation, difference, roundScore) {
     ];
 
     items.forEach((item, index) => {
-        const li = document.createElement('div'); // Using div for Reddit style
-        li.style.padding = '8px 12px';
-        li.style.borderBottom = index < items.length - 1 ? '1px solid #343536' : 'none';
+        const li = document.createElement('div');
+        li.className = 'results-item';
+        if (index < items.length - 1) {
+            li.classList.add('results-item-border');
+        }
         li.textContent = item;
         resultsList.appendChild(li);
     });
 
     modal.appendChild(resultsList);
 
-
     // Add buttons
     const buttonContainer = document.createElement('div');
-    buttonContainer.style.display = 'flex';
-    buttonContainer.style.justifyContent = 'space-between';
-    buttonContainer.style.marginTop = '20px';
+    buttonContainer.className = 'button-container';
 
     const newGameBtn = document.createElement('button');
     newGameBtn.textContent = 'New Round';
-    newGameBtn.style.backgroundColor = '#FF4500'; // Reddit orange
-    newGameBtn.style.color = 'white';
-    newGameBtn.style.border = 'none';
-    newGameBtn.style.padding = '8px 12px';
-    newGameBtn.style.borderRadius = '20px'; // Reddit rounded buttons
-    newGameBtn.style.cursor = 'pointer';
-    newGameBtn.style.width = '48%';
-    newGameBtn.style.fontWeight = 'bold';
-
+    newGameBtn.className = 'button-primary';
     newGameBtn.addEventListener('click', () => {
         document.body.removeChild(modal);
         startNewGame();
@@ -427,14 +224,7 @@ function showRoundResults(totalPopulation, difference, roundScore) {
 
     const closeBtn = document.createElement('button');
     closeBtn.textContent = 'Close';
-    closeBtn.style.backgroundColor = '#272729'; // Dark button
-    closeBtn.style.color = '#D7DADC';
-    closeBtn.style.border = '1px solid #343536';
-    closeBtn.style.padding = '8px 12px';
-    closeBtn.style.borderRadius = '20px'; // Reddit rounded buttons
-    closeBtn.style.cursor = 'pointer';
-    closeBtn.style.width = '48%';
-
+    closeBtn.className = 'button-secondary';
     closeBtn.addEventListener('click', () => {
         document.body.removeChild(modal);
     });
@@ -451,33 +241,18 @@ function showRoundResults(totalPopulation, difference, roundScore) {
 function showToast(message, duration = 2000) {
     // Create toast element
     const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.style.position = 'fixed';
-    toast.style.bottom = '20px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.backgroundColor = '#1A1A1B'; // Reddit dark background
-    toast.style.color = '#D7DADC'; // Reddit text color
-    toast.style.padding = '10px 20px';
-    toast.style.borderRadius = '4px';
-    toast.style.zIndex = '2000';
-    toast.style.border = '1px solid #343536'; // Reddit border
-    toast.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.3)';
-    toast.style.fontFamily = '"Noto Sans", "Helvetica Neue", Arial, sans-serif'; // Reddit font
+    toast.className = 'toast';
 
     // Add Reddit-style icon
     const toastContent = document.createElement('div');
-    toastContent.style.display = 'flex';
-    toastContent.style.alignItems = 'center';
+    toastContent.className = 'toast-content';
 
     const redditIcon = document.createElement('span');
     redditIcon.textContent = '🔴'; // Simple Reddit-like icon
-    redditIcon.style.marginRight = '8px';
-    redditIcon.style.color = '#FF4500'; // Reddit orange
+    redditIcon.className = 'toast-icon';
 
     toastContent.appendChild(redditIcon);
     toastContent.appendChild(document.createTextNode(message));
-    toast.innerHTML = '';
     toast.appendChild(toastContent);
 
     // Add to document

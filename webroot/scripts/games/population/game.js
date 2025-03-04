@@ -1,10 +1,26 @@
 // Setup event listeners for game buttons
 function setupGameEventListeners() {
+    // Get reference to the game buttons
+    const showGameButton = document.getElementById('show-game-button');
+    const startButton = document.getElementById('start-button');
+    const resetButton = document.getElementById('reset-button');
+
     // Start button - Begin a new game
     startButton.addEventListener('click', startNewGame);
 
     // Reset button - Clear current selections during a game
     resetButton.addEventListener('click', resetSelections);
+
+    // Show/hide game button
+    showGameButton.addEventListener('click', () => {
+        if (!gameActive) {
+            startNewGame();
+            showGameButton.textContent = 'Quit Game';
+        } else {
+            quitGame();
+            showGameButton.textContent = 'Play Population Game';
+        }
+    });
 
     // Modify the existing handleGlobeClick function to support game functionality
     const originalHandleGlobeClick = handleGlobeClick;
@@ -18,6 +34,7 @@ function setupGameEventListeners() {
         }
     };
 }
+
 // Start a new game round
 function startNewGame() {
     // Reset for a new game
@@ -38,6 +55,7 @@ function startNewGame() {
     startButton.textContent = 'New Target';
     resetButton.disabled = false;
     resetButton.style.opacity = '1';
+
     // Animate the target display in the middle of the screen
     showAnimatedTarget(targetPopulation);
 
@@ -74,12 +92,13 @@ function handleCountrySelection(feature) {
     // Update UI
     updateSelectedCountriesDisplay();
 
-    // If 4 countries are selected, calculate score
+    // If max number of countries are selected, calculate score
     if (selectedCountries.length === NUMBER_OF_COUNTRIES) {
         calculateScore();
     }
 }
-// Calculate score after selecting 4 countries
+
+// Calculate score after selecting countries
 function calculateScore() {
     // Calculate total population of selected countries
     const totalPopulation = selectedCountries.reduce((sum, country) => sum + country.population, 0);
@@ -147,6 +166,8 @@ function calculateScore() {
 
     // Show round results
     showRoundResults(totalPopulation, difference, roundScore);
+
+    // Send game results to parent
     window.parent.postMessage(
         {
             type: 'gameFinished',
@@ -159,13 +180,11 @@ function calculateScore() {
         '*'
     );
 }
+
 // Reset current selections
 function resetSelections() {
     selectedCountries = [];
-    gameSelectedCountries = []
-
-
-
+    gameSelectedCountries = [];
 
     // Update mini panel
     updateSelectedCountriesDisplay();
@@ -173,6 +192,7 @@ function resetSelections() {
     document.getElementById('mini-sum-value').textContent = '0';
     document.getElementById('mini-diff-value').textContent = '0';
     document.getElementById('mini-diff-value').style.color = 'white';
+
     // Force a redraw of the globe
     needsRedraw = true;
 }
