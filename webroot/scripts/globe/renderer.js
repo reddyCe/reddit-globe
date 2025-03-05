@@ -378,10 +378,35 @@ function drawPolygon(appContext, coordinates, countryCode) {
 
         ctx.beginPath();
 
-        // Drawing code remains the same...
+        // CRITICAL FIX: This is the missing code that draws the country paths
+        let firstPoint = null;
+        let firstVisiblePoint = null;
 
-        // Apply different styles based on state - this code is correct but was failing
-        // due to the selection checks above not working properly
+        // Loop through coordinates to draw the polygon
+        for (let i = 0; i < ring.length; i++) {
+            const coords = ring[i];
+            const point = projectGlobePoint(appContext, coords[1], coords[0]);
+
+            // Only draw points on the visible side of the globe (z > 0)
+            if (point.z > 0) {
+                if (!firstVisiblePoint) {
+                    ctx.moveTo(point.x, point.y);
+                    firstVisiblePoint = point;
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            }
+        }
+
+        // Close the path if we found at least one visible point
+        if (firstVisiblePoint) {
+            ctx.closePath();
+        } else {
+            // Skip rendering if no points are visible
+            continue;
+        }
+
+        // Apply different styles based on state
         if (isQuizCorrect) {
             // Correct answer in quiz - bright green
             ctx.fillStyle = `rgba(76, 175, 80, 0.8)`;
@@ -413,7 +438,6 @@ function drawPolygon(appContext, coordinates, countryCode) {
         ctx.stroke();
     }
 }
-
 /**
  * FIX 6: Add a debug function to trace selection state changes
  * Add this to webroot/index.js to help diagnose problems

@@ -299,7 +299,7 @@ button:disabled {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .game-selector {
-        flex-direction: column;
+        flex-direction: row;
         gap: 10px;
         bottom: 10px;
     }
