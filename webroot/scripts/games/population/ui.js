@@ -20,6 +20,14 @@ function quitGame() {
     gameActive = false;
     minimizedSelectionPanel.style.display = 'none';
 
+    // Check if quiz is also inactive before hiding exit button
+    if (typeof quizActive === 'undefined' || !quizActive) {
+        const exitButton = document.getElementById('exit-button');
+        if (exitButton) {
+            exitButton.style.display = 'none';
+        }
+    }
+
     // Update UI
     startButton.textContent = 'Start Game';
     resetButton.disabled = true;

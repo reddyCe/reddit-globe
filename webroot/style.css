@@ -641,3 +641,35 @@ select {
 .game-inactive {
     opacity: 0.5;
 }
+
+.exit-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.exit-button button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #1A1A1B;
+    color: white;
+    border: 1px solid #343536;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease;
+}
+
+.exit-button button:hover {
+    background-color: #272729;
+}
+
+.exit-icon {
+    font-weight: bold;
+    font-size: 16px;
+}

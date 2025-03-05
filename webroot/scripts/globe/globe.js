@@ -155,6 +155,8 @@ function setupEventListeners() {
         centerY = canvas.height / 2;
         needsRedraw = true;
     });
+
+    setupExitButtonHandler();
 }
 
 function handleTouchStart(e) {
@@ -1014,5 +1016,33 @@ function highlightLocation(location) {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
         ctx.fill();
+    }
+}
+
+function setupExitButtonHandler() {
+    const exitButton = document.getElementById('exit-button');
+    if (exitButton) {
+        exitButton.addEventListener('click', () => {
+            // Check if any game is active and quit it
+            if (typeof gameActive !== 'undefined' && gameActive) {
+                quitGame();
+            }
+
+            if (typeof quizActive !== 'undefined' && quizActive) {
+                quitQuizGame();
+            }
+
+            // Show the game selector
+            const gameSelector = document.getElementById('arcade-game-selector');
+            if (gameSelector) {
+                gameSelector.style.display = 'flex';
+                setTimeout(() => {
+                    gameSelector.style.opacity = '1';
+                }, 10);
+            }
+
+            // Hide the exit button
+            exitButton.style.display = 'none';
+        });
     }
 }

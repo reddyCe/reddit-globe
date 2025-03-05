@@ -190,13 +190,18 @@ function startQuizGame() {
     quizActive = true;
     quizPanel.style.display = 'block';
 
+    // Show the exit button
+    const exitButton = document.getElementById('exit-button');
+    if (exitButton) {
+        exitButton.style.display = 'block';
+    }
+
     // Show toast notification
     showToast(`Quiz started! ${currentQuestion.question}`, 5000);
 
     // Force a redraw of the globe
     needsRedraw = true;
 }
-
 // Get a random question from the array
 function getRandomQuestion() {
     const randomIndex = Math.floor(Math.random() * quizQuestions.length);
@@ -720,6 +725,14 @@ function quitQuizGame() {
 
     // Hide quiz panel
     quizPanel.style.display = 'none';
+
+    // Check if population game is also inactive before hiding exit button
+    if (typeof gameActive === 'undefined' || !gameActive) {
+        const exitButton = document.getElementById('exit-button');
+        if (exitButton) {
+            exitButton.style.display = 'none';
+        }
+    }
 
     // Reset button text
     quizButton.textContent = 'Play Quiz Game';

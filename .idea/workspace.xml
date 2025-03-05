@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
-      <change afterPath="$PROJECT_DIR$/webroot/scripts/game-functions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,44 +34,44 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "reddyCe"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;reddyCe&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/reddyCe/redon-reddit-dev.git",
-    "accountId": "c2c0ed97-e5df-42db-8ed1-42c13d5bddee"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/reddyCe/redon-reddit-dev.git&quot;,
+    &quot;accountId&quot;: &quot;c2c0ed97-e5df-42db-8ed1-42c13d5bddee&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main.tsx" root0="FORCE_HIGHLIGHTING" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2tiQl81M5ZMkRJq4aQJmo8TrbDI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/RedonBettermile/WebstormProjects/redon-reddit-dev",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Users/RedonBettermile/WebstormProjects/redon-reddit-dev/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/webroot/scripts/globe" />
@@ -150,9 +150,15 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/webroot/scripts/globe/globe.js</url>
-          <line>676</line>
+          <line>678</line>
           <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/webroot/scripts/games/population/game.js</url>
+          <line>38</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

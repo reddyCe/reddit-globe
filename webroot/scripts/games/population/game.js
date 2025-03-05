@@ -51,6 +51,12 @@ function startNewGame() {
     gameRound++;
     minimizedSelectionPanel.style.display = 'block';
 
+    // Show the exit button
+    const exitButton = document.getElementById('exit-button');
+    if (exitButton) {
+        exitButton.style.display = 'block';
+    }
+
     // Update UI
     startButton.textContent = 'New Target';
     resetButton.disabled = false;
@@ -62,7 +68,6 @@ function startNewGame() {
     // Show toast notification
     showToast(`New game started! Select ${NUMBER_OF_COUNTRIES} countries to match the target population.`, 3000);
 }
-
 // Handle country selection for the game
 function handleCountrySelection(feature) {
     // Get country information
