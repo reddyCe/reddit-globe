@@ -41,6 +41,19 @@ export async function initGlobe(appContext) {
         appContext.rotation = rotation;
         appContext.zoomScale = zoomScale;
 
+        // Initialize gameSelectedCountries and quizSelectedCountries if not exists
+        if (!appContext.gameSelectedCountries) {
+            appContext.gameSelectedCountries = [];
+        }
+
+        if (!appContext.quizSelectedCountries) {
+            appContext.quizSelectedCountries = [];
+        }
+
+        if (!appContext.quizCorrectCountries) {
+            appContext.quizCorrectCountries = [];
+        }
+
         // Generate stars background
         setupStars(appContext, 400);
 

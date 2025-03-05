@@ -20,6 +20,13 @@ export function initPopulationGame(appContext) {
 
     // Store references in app context
     appContext.gameState = gameState;
+
+    // Initialize gameSelectedCountries if it doesn't exist
+    if (!appContext.gameSelectedCountries) {
+        appContext.gameSelectedCountries = [];
+    }
+
+    // Link game state selected country codes to app context
     appContext.gameSelectedCountries = gameState.selectedCountryCodes;
 
     // Set up game callback handlers in app context

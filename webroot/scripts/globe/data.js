@@ -32,11 +32,39 @@ export async function loadGeoJsonData() {
 function processGeoJsonData(data) {
     const countryColors = {};
 
-    // Generate random colors for countries
+    // Add ISO_A3 codes to features that might be missing them
     data.features.forEach(feature => {
+        // Ensure properties object exists
+        if (!feature.properties) {
+            feature.properties = {};
+        }
+
+        // If ISO_A3 doesn't exist, add a placeholder code
+        if (!feature.properties.ISO_A3) {
+            if (feature.properties.code) {
+                feature.properties.ISO_A3 = feature.properties.code;
+            } else {
+                // Generate a unique placeholder code
+                feature.properties.ISO_A3 = 'UNK' + Math.floor(Math.random() * 1000);
+            }
+        }
+
+        // Ensure we have a name
+        if (!feature.properties.NAME && feature.properties.name) {
+            feature.properties.NAME = feature.properties.name;
+        }
+        if (!feature.properties.name && feature.properties.NAME) {
+            feature.properties.name = feature.properties.NAME;
+        }
+
+        // Ensure population exists
+        if (!feature.properties.POP_EST && !feature.properties.population) {
+            feature.properties.POP_EST = 0;
+        }
+
         // Generate a color based on population for heatmap mode
-        const population = feature.properties.POP_EST || 0;
-        const normalizedPop = Math.min(Math.log(population) / Math.log(1500000000), 1);
+        const population = feature.properties.POP_EST || feature.properties.population || 0;
+        const normalizedPop = Math.min(Math.log(population + 1) / Math.log(1500000000), 1);
 
         // Create both a random color and a heat color
         countryColors[feature.properties.ISO_A3] = {
@@ -62,6 +90,11 @@ function processGeoJsonData(data) {
  */
 function simplifyGeometry(feature) {
     const MAX_POLYGON_POINTS = 1000;
+
+    if (!feature.geometry) {
+        console.warn('Feature missing geometry:', feature);
+        return;
+    }
 
     if (feature.geometry.type === 'Polygon') {
         feature.geometry.coordinates = feature.geometry.coordinates.map(ring => {

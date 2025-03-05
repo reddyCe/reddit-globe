@@ -140,7 +140,7 @@ function drawBaseGlobe(appContext) {
  * @param {Object} appContext - Application context
  */
 function drawCountries(appContext) {
-    const {worldData, countryColors} = appContext;
+    const {worldData} = appContext;
 
     for (const feature of worldData.features) {
         if (feature.geometry.type === 'Polygon') {
@@ -163,19 +163,21 @@ function drawPolygon(appContext, coordinates, countryCode) {
     if (!coordinates || coordinates.length === 0) return;
 
     const {
-        ctx, countryColors, displayMode, hoveredFeature,
+        ctx, worldData, hoveredFeature,
         lastClickedLocation, gameActive, quizActive,
         gameSelectedCountries, quizSelectedCountries, quizCorrectCountries
     } = appContext;
 
-    // Get color based on mode
-    const colorObj = countryColors[countryCode] || {
-        randomColor: '#CCCCCC',
-        heatColor: '#CCCCCC'
-    };
+    // Default color if country code not found
+    const defaultColor = '#CCCCCC';
 
-    const color = (displayMode === 'country') ?
-        colorObj.randomColor : colorObj.heatColor;
+    // Get color for the country - avoid accessing undefined countryColors
+    let color = defaultColor;
+    if (appContext.worldData && appContext.worldData.countryColors &&
+        appContext.worldData.countryColors[countryCode]) {
+        const colorObj = appContext.worldData.countryColors[countryCode];
+        color = colorObj.randomColor;
+    }
 
     // Check if the polygon is being hovered
     const hoveredCode = hoveredFeature ?
@@ -189,9 +191,12 @@ function drawPolygon(appContext, coordinates, countryCode) {
         lastClickedLocation.code === countryCode;
 
     // Check if country is selected in games
-    const isGameSelected = gameActive && gameSelectedCountries.includes(countryCode);
-    const isQuizSelected = quizActive && quizSelectedCountries.some(c => c.code === countryCode);
-    const isQuizCorrect = quizActive && quizCorrectCountries && quizCorrectCountries.includes(countryCode);
+    const isGameSelected = gameActive && gameSelectedCountries &&
+        gameSelectedCountries.includes(countryCode);
+    const isQuizSelected = quizActive && quizSelectedCountries &&
+        quizSelectedCountries.some(c => c.code === countryCode);
+    const isQuizCorrect = quizActive && quizCorrectCountries &&
+        quizCorrectCountries.includes(countryCode);
 
     // Draw all rings in the polygon
     for (const ring of coordinates) {
