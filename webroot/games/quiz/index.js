@@ -105,13 +105,16 @@ function handleQuizCountrySelection(feature, appContext) {
         name: countryName
     });
 
+    // IMPORTANT FIX: Update the app context with a new array reference
+    // This makes sure the renderer gets the latest selection data
+    appContext.quizSelectedCountries = [...quizState.selectedCountries];
+
     // Force a redraw of the globe
     appContext.needsRedraw = true;
 
     // Update UI
     updateQuizUI(quizState);
 }
-
 /**
  * Submit answer for evaluation
  * @param {Object} appContext - Application context
@@ -126,8 +129,9 @@ function submitQuizAnswer(appContext) {
     const incorrectSelections = selectedCodes.filter(code => !correctCodes.includes(code));
     const missedAnswers = correctCodes.filter(code => !selectedCodes.includes(code));
 
-    // Store correct countries for highlighting
-    appContext.quizCorrectCountries = correctCodes;
+    // IMPORTANT FIX: Store correct countries for highlighting
+    // Create a new array reference to ensure the renderer gets updated
+    appContext.quizCorrectCountries = [...correctCodes];
 
     // Calculate score
     const scoreChange = (correctSelections.length * 10) - (incorrectSelections.length * 5);

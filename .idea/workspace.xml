@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
+    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/games/population/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/games/quiz/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/quiz/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -127,7 +127,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741121982064</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactor">
+      <option name="closed" value="true" />
+      <created>1741182865133</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741182865133</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +145,8 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="remove game" />
     <MESSAGE value="add quiz game" />
-    <option name="LAST_COMMIT_MESSAGE" value="add quiz game" />
+    <MESSAGE value="refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

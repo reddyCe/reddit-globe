@@ -107,6 +107,10 @@ function handleCountrySelection(feature, appContext) {
         population: population
     });
 
+    // IMPORTANT FIX: Make sure the country codes get updated in the app context
+    // This explicitly updates the reference to ensure renderer has the latest data
+    appContext.gameSelectedCountries = [...gameState.selectedCountryCodes];
+
     // Force a redraw of the globe
     appContext.needsRedraw = true;
 
@@ -118,7 +122,6 @@ function handleCountrySelection(feature, appContext) {
         finishRound(appContext);
     }
 }
-
 /**
  * Calculate score and end the round
  * @param {Object} appContext - Application context

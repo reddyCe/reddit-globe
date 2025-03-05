@@ -14,7 +14,11 @@ const appContext = {
     worldData: null,
     selectedCountries: [],
     hoveredFeature: null,
-    needsRedraw: true
+    needsRedraw: true,
+    // Add explicit initializations for country selection tracking
+    gameSelectedCountries: [],
+    quizSelectedCountries: [],
+    quizCorrectCountries: []
 };
 
 // Initialize the application once the DOM is loaded

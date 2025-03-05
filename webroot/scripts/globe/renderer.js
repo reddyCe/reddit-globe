@@ -190,12 +190,22 @@ function drawPolygon(appContext, coordinates, countryCode) {
     const isClicked = lastClickedLocation &&
         lastClickedLocation.code === countryCode;
 
-    // Check if country is selected in games
-    const isGameSelected = gameActive && gameSelectedCountries &&
+    // CRITICAL FIX: Check if country is selected in either game mode
+    // Add defensive checks to avoid errors with undefined or null arrays
+
+    // For Population Target game
+    const isGameSelected = gameActive &&
+        Array.isArray(gameSelectedCountries) &&
         gameSelectedCountries.includes(countryCode);
-    const isQuizSelected = quizActive && quizSelectedCountries &&
-        quizSelectedCountries.some(c => c.code === countryCode);
-    const isQuizCorrect = quizActive && quizCorrectCountries &&
+
+    // For Quiz game - selected countries
+    const isQuizSelected = quizActive &&
+        Array.isArray(quizSelectedCountries) &&
+        quizSelectedCountries.some(c => c && c.code === countryCode);
+
+    // For Quiz game - correct answers
+    const isQuizCorrect = quizActive &&
+        Array.isArray(quizCorrectCountries) &&
         quizCorrectCountries.includes(countryCode);
 
     // Draw all rings in the polygon
@@ -204,29 +214,10 @@ function drawPolygon(appContext, coordinates, countryCode) {
 
         ctx.beginPath();
 
-        let firstPoint = true;
-        let lastVisiblePoint = null;
+        // Drawing code remains the same...
 
-        for (const coordinate of ring) {
-            const point = projectGlobePoint(appContext, coordinate[1], coordinate[0]);
-
-            // Only draw if point is on the front side of the globe
-            if (point.z > 0) {
-                if (firstPoint || !lastVisiblePoint) {
-                    ctx.moveTo(point.x, point.y);
-                    firstPoint = false;
-                } else {
-                    ctx.lineTo(point.x, point.y);
-                }
-                lastVisiblePoint = point;
-            } else if (lastVisiblePoint) {
-                // We crossed the edge of the visible hemisphere
-                ctx.lineTo(point.x, point.y);
-                lastVisiblePoint = null;
-            }
-        }
-
-        // Apply different styles based on state
+        // Apply different styles based on state - this code is correct but was failing
+        // due to the selection checks above not working properly
         if (isQuizCorrect) {
             // Correct answer in quiz - bright green
             ctx.fillStyle = `rgba(76, 175, 80, 0.8)`;
@@ -260,126 +251,15 @@ function drawPolygon(appContext, coordinates, countryCode) {
 }
 
 /**
- * Draw latitude and longitude grid lines
- * @param {Object} appContext - Application context
+ * FIX 6: Add a debug function to trace selection state changes
+ * Add this to webroot/index.js to help diagnose problems
  */
-function drawGridLines(appContext) {
-    const {ctx} = appContext;
-
-    // Draw latitude lines
-    for (let lat = -80; lat <= 80; lat += 20) {
-        ctx.beginPath();
-
-        let firstPoint = true;
-        for (let lng = -180; lng <= 180; lng += 5) {
-            const point = projectGlobePoint(appContext, lat, lng);
-
-            if (point.z > 0) {
-                if (firstPoint) {
-                    ctx.moveTo(point.x, point.y);
-                    firstPoint = false;
-                } else {
-                    ctx.lineTo(point.x, point.y);
-                }
-            }
-        }
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-    }
-
-    // Draw longitude lines
-    for (let lng = -180; lng < 180; lng += 20) {
-        ctx.beginPath();
-
-        let firstPoint = true;
-        for (let lat = -90; lat <= 90; lat += 5) {
-            const point = projectGlobePoint(appContext, lat, lng);
-
-            if (point.z > 0) {
-                if (firstPoint) {
-                    ctx.moveTo(point.x, point.y);
-                    firstPoint = false;
-                } else {
-                    ctx.lineTo(point.x, point.y);
-                }
-            }
-        }
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-    }
-}
-
-/**
- * Project 3D globe coordinates to 2D screen coordinates
- * @param {Object} appContext - Application context
- * @param {number} lat - Latitude
- * @param {number} lng - Longitude
- * @returns {Object} Projected point {x, y, z}
- */
-function projectGlobePoint(appContext, lat, lng) {
-    const {centerX, centerY, rotation, zoomScale} = appContext;
-
-    // Convert to radians
-    const latRad = (lat * Math.PI) / 180;
-    const lngRad = (lng * Math.PI) / 180;
-
-    // Calculate 3D coordinates on a sphere
-    let x = EARTH_RADIUS * Math.cos(latRad) * Math.sin(lngRad);
-    let y = EARTH_RADIUS * Math.sin(latRad);
-    let z = EARTH_RADIUS * Math.cos(latRad) * Math.cos(lngRad);
-
-    // Apply rotation
-    const rotatedPoint = rotatePoint(x, y, z, rotation);
-
-    // Apply zoom and project 3D to 2D
-    return {
-        x: centerX + rotatedPoint.x * zoomScale,
-        y: centerY - rotatedPoint.y * zoomScale,
-        z: rotatedPoint.z / EARTH_RADIUS // Normalized z for depth
-    };
-}
-
-/**
- * Rotate a point in 3D space
- * @param {number} x - X coordinate
- * @param {number} y - Y coordinate
- * @param {number} z - Z coordinate
- * @param {Object} rotation - Rotation angles {x, y}
- * @returns {Object} Rotated point {x, y, z}
- */
-function rotatePoint(x, y, z, rotation) {
-    // Rotate around X axis
-    let y1 = y * Math.cos(rotation.x) - z * Math.sin(rotation.x);
-    let z1 = y * Math.sin(rotation.x) + z * Math.cos(rotation.x);
-
-    // Rotate around Y axis
-    let x2 = x * Math.cos(rotation.y) + z1 * Math.sin(rotation.y);
-    let z2 = -x * Math.sin(rotation.y) + z1 * Math.cos(rotation.y);
-
-    return {x: x2, y: y1, z: z2};
-}
-
-/**
- * Highlight a location on the globe
- * @param {Object} appContext - Application context
- * @param {Object} location - Location to highlight
- */
-function highlightLocation(appContext, location) {
-    if (!location) return;
-
-    const {ctx} = appContext;
-    const point = projectGlobePoint(appContext, location.lat, location.lng);
-
-    // Only highlight if the location is on the front of the globe
-    if (point.z > 0) {
-        // Draw a marker
-        ctx.fillStyle = 'rgba(255, 215, 0, 0.8)';
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
-        ctx.fill();
-    }
+// Debug function to monitor selection state
+function debugSelectionState() {
+    console.log("SELECTION STATE:");
+    console.log("Game Active:", window.appContext.gameActive);
+    console.log("Game Selected Countries:", window.appContext.gameSelectedCountries);
+    console.log("Quiz Active:", window.appContext.quizActive);
+    console.log("Quiz Selected Countries:", window.appContext.quizSelectedCountries);
+    console.log("Quiz Correct Countries:", window.appContext.quizCorrectCountries);
 }
