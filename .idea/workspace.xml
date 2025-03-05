@@ -4,11 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
+    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="make smaller">
+      <change afterPath="$PROJECT_DIR$/src/api/redisService.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Leaderboard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/scoring.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/components/modal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/components/toast.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/components/tooltip.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/common/gameSelector.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/population/game.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/population/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/population/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/population/ui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/quiz/game.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/quiz/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/quiz/questions.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/quiz/state.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/games/quiz/ui.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/communication.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/globe/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/globe/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/globe/interaction.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/globe/projection.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/utils/animation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/utils/formatting.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/styles/components.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/styles/games.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/styles/globe.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/styles/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/globe.geojson" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/assets/data/globe.geojson" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/game-functions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/utilities.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/style.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +58,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="TypeScript File" />
+        <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -27,6 +69,11 @@
       <list>
         <option value="Redon Cela" />
       </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -49,28 +96,36 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2tiQl81M5ZMkRJq4aQJmo8TrbDI" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "big__refactor",
+    "last_opened_file_path": "/Users/RedonBettermile/WebstormProjects/redon-reddit-dev",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Users/RedonBettermile/WebstormProjects/redon-reddit-dev/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/webroot/scripts/globe" />
+      <recent name="$PROJECT_DIR$/webroot/assets/data" />
+      <recent name="$PROJECT_DIR$/webroot/assets" />
+      <recent name="$PROJECT_DIR$/src/utils" />
+      <recent name="$PROJECT_DIR$/src/utils/data" />
+      <recent name="$PROJECT_DIR$/src/types" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -122,7 +177,23 @@
       <option name="project" value="LOCAL" />
       <updated>1741121982064</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="make smaller">
+      <option name="closed" value="true" />
+      <created>1741166558045</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1741166558045</updated>
+    </task>
+    <task id="LOCAL-00006" summary="make smaller">
+      <option name="closed" value="true" />
+      <created>1741167828140</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1741167828140</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,7 +203,8 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="remove game" />
     <MESSAGE value="add quiz game" />
-    <option name="LAST_COMMIT_MESSAGE" value="add quiz game" />
+    <MESSAGE value="make smaller" />
+    <option name="LAST_COMMIT_MESSAGE" value="make smaller" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

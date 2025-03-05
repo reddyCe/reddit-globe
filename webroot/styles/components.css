@@ -1,0 +1,328 @@
+/* Component styles for Globe Explorer */
+
+/* Toast component */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1A1A1B;
+    color: #D7DADC;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 2000;
+    border: 1px solid #343536;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    max-width: 80%;
+    animation: slideUp 0.3s ease-out;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+}
+
+.toast-icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+/* Modal component */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal {
+    background-color: #1A1A1B;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+    border: 1px solid #343536;
+    color: #D7DADC;
+}
+
+.modal-small {
+    width: 400px;
+}
+
+.modal-medium {
+    width: 600px;
+}
+
+.modal-large {
+    width: 800px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #343536;
+    background: linear-gradient(to bottom, #1F1F1F, #151515);
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #FF8C00;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #818384;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    color: #D7DADC;
+}
+
+.modal-content {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #343536;
+    background-color: #1A1A1B;
+}
+
+/* Tooltip component */
+#tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    pointer-events: none;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    max-width: 250px;
+    word-wrap: break-word;
+}
+
+/* Game selector component */
+.game-selector {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.game-block {
+    width: 180px;
+    height: 120px;
+    background-color: #1A1A1B;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 10px;
+}
+
+.population-game {
+    border: 2px solid #FF4500;
+}
+
+.quiz-game {
+    border: 2px solid #FF8C00;
+}
+
+.game-title {
+    color: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.population-game .game-title {
+    color: #FF4500;
+}
+
+.quiz-game .game-title {
+    color: #FF8C00;
+}
+
+.game-desc {
+    color: #D7DADC;
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+.game-score {
+    color: inherit;
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.population-game .game-score {
+    color: #FF4500;
+}
+
+.quiz-game .game-score {
+    color: #FF8C00;
+}
+
+/* Hover effects */
+.game-block:hover {
+    transform: translateY(-5px);
+}
+
+.population-game:hover {
+    box-shadow: 0 8px 16px rgba(255, 69, 0, 0.3);
+}
+
+.quiz-game:hover {
+    box-shadow: 0 8px 16px rgba(255, 140, 0, 0.3);
+}
+
+/* Active states */
+.population-game.active {
+    box-shadow: 0 0 15px rgba(255, 69, 0, 0.7);
+}
+
+.quiz-game.active {
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.7);
+}
+
+.game-inactive {
+    opacity: 0.5;
+}
+
+/* Button styles */
+button {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: inherit;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.button-primary {
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.button-primary:hover {
+    background-color: #FF5722;
+    transform: translateY(-2px);
+}
+
+.button-secondary {
+    background-color: #272729;
+    color: #D7DADC;
+    border: 1px solid #343536;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.button-secondary:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.quiz-button-primary {
+    background-color: #FF8C00;
+}
+
+.quiz-button-primary:hover {
+    background-color: #FFA500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .game-selector {
+        flex-direction: column;
+        gap: 10px;
+        bottom: 10px;
+    }
+
+    .game-block {
+        width: 160px;
+        height: 100px;
+    }
+
+    .modal-small, .modal-medium, .modal-large {
+        width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    .toast {
+        width: 90%;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .button-primary, .button-secondary {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
