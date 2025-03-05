@@ -1,83 +1,104 @@
-import './createPost.js';
+/**
+ * Globe Explorer - Main Entry Point
+ */
 import { Devvit, useState, useWebView } from '@devvit/public-api';
-import type { DevvitMessage, WebViewMessage } from './message.ts';
+import {RedisService, LeaderboardEntry} from './api/redisService';
+import {Leaderboard} from './components/Leaderboard';
+import './createPost';
+import type {DevvitMessage, WebViewMessage} from './types/message';
 
+// Configure Devvit
 Devvit.configure({
   redditAPI: true,
   redis: true,
 });
 
-// Add a custom post type to Devvit
+/**
+ * GameFinishedScreen Component
+ * Displayed after a game is finished
+ */
+function GameFinishedScreen({
+                                lastScore,
+                                score,
+                                isNewHighScore,
+                                onContinue
+                            }) {
+    return (
+        <vstack padding="large" spacing="medium" alignment="middle center">
+            <text size="large" weight="bold" align="center">Game Finished!</text>
+
+            <vstack
+                background={isNewHighScore ? "success" : "secondary"}
+                padding="large"
+                cornerRadius="large"
+                alignment="middle center"
+                width="90%">
+
+                <text size="medium" weight="bold">YOUR SCORE</text>
+                <text size="xxlarge" weight="bold">{lastScore}</text>
+
+                {isNewHighScore && (
+                    <vstack padding="medium" alignment="middle center">
+                        <text size="large" weight="bold" color="white">NEW HIGH SCORE!</text>
+                        <text size="small">Previous best: {score !== lastScore ? score : "None"}</text>
+                    </vstack>
+                )}
+            </vstack>
+
+            <button
+                onPress={onContinue}
+                color="brand"
+                size="large">
+                Continue
+            </button>
+        </vstack>
+    );
+}
+
+/**
+ * Main component for the Globe Explorer custom post type
+ */
 Devvit.addCustomPostType({
   name: 'Globe Explorer',
   height: 'tall',
   render: (context) => {
-    // Load username with `useAsync` hook
+      // Load username
     const [username] = useState(async () => {
       return (await context.reddit.getCurrentUsername()) ?? 'anon';
     });
 
+      // Create Redis service
+      const redisService = new RedisService(context.redis);
+
+      // Load user score
     const [score, setScore] = useState(async () => {
-      const scoreStr = await context.redis.get(`score_${context.userId}`);
-      return scoreStr ? parseInt(scoreStr) : 0;
+        return await redisService.getUserScore(context.userId);
     });
 
-    // State to track when a game has just finished and the new score
+      // State for game completion
     const [gameJustFinished, setGameJustFinished] = useState(false);
     const [lastScore, setLastScore] = useState(0);
     const [isNewHighScore, setIsNewHighScore] = useState(false);
 
-    // Helper function to fetch leaderboard data
-    const fetchLeaderboardData = async (ctx) => {
-      try {
-        // Get the list of all users who have scores
-        const userIds = await ctx.redis.get('globe_explorer_users');
-        if (!userIds) return [];
-
-        const userIdList = JSON.parse(userIds);
-        const leaderboardData = [];
-
-        // Fetch each user's score and username
-        for (const userId of userIdList) {
-          const userScore = await ctx.redis.get(`score_${userId}`);
-          const userName = await ctx.redis.get(`username_${userId}`);
-
-          if (userScore) {
-            leaderboardData.push({
-              userId,
-              username: userName || 'Anonymous',
-              score: parseInt(userScore)
-            });
-          }
-        }
-
-        // Sort by score (highest first)
-        return leaderboardData.sort((a, b) => b.score - a.score).slice(0, 10);
-      } catch (error) {
-        console.error('Error fetching leaderboard:', error);
-        return [];
-      }
-    };
-
-    // Get the leaderboard data
-    const [leaderboard, setLeaderboard] = useState(async () => {
-      return await fetchLeaderboardData(context);
+      // Load leaderboard data
+      const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(async () => {
+          return await redisService.getLeaderboard();
     });
 
     // Track last location for game state restoration
     const [lastLocation, setLastLocation] = useState(async () => {
-      const savedLocation = await context.redis.get(`lastLocation_${context.postId}`);
-      return savedLocation ? JSON.parse(savedLocation) : null;
+        return await redisService.getLocation(context.postId);
     });
 
+      // Set up WebView
     const webView = useWebView<WebViewMessage, DevvitMessage>({
-      // URL of your web view content
       url: 'page.html',
-      // Handle messages sent from the web view
       async onMessage(message, webView) {
         console.log('Received message:', message);
+
         switch (message.type) {
           case 'webViewReady':
+              // Send initial data to the WebView
             webView.postMessage({
               type: 'initialData',
               data: {
@@ -86,12 +107,10 @@ Devvit.addCustomPostType({
               },
             });
             break;
+
           case 'locationClicked':
             // Save the clicked location
-            await context.redis.set(
-                `lastLocation_${context.postId}`,
-                JSON.stringify(message.data.location)
-            );
+              await redisService.saveLocation(context.postId, message.data.location);
             setLastLocation(message.data.location);
 
             // Acknowledge the click
@@ -105,6 +124,7 @@ Devvit.addCustomPostType({
             // Show toast with location info
             context.ui.showToast(`Location clicked: ${message.data.location.name || 'Unknown'}`);
             break;
+
           case 'gameFinished':
             try {
               const roundScore = message.data.roundScore;
@@ -114,27 +134,9 @@ Devvit.addCustomPostType({
 
               // Store the user's score if it's higher than their previous best
               if (isNewRecord) {
-                await context.redis.set(`score_${context.userId}`, roundScore.toString());
+                  await redisService.saveUserScore(context.userId, username, roundScore);
                 setScore(roundScore);
               }
-
-              // Store the username for display in leaderboard
-              await context.redis.set(`username_${context.userId}`, username);
-
-              // Add this user to the list of users with scores if not already there
-              const userIdsStr = await context.redis.get('globe_explorer_users');
-              let userIds = [];
-
-              if (userIdsStr) {
-                userIds = JSON.parse(userIdsStr);
-                if (!userIds.includes(context.userId)) {
-                  userIds.push(context.userId);
-                }
-              } else {
-                userIds = [context.userId];
-              }
-
-              await context.redis.set('globe_explorer_users', JSON.stringify(userIds));
 
               // Update state to show the game finished UI
               setLastScore(roundScore);
@@ -142,19 +144,19 @@ Devvit.addCustomPostType({
               setGameJustFinished(true);
 
               // Close the webView to return to the main UI
-
+                webView.close();
 
               // Refresh the leaderboard data
-              const refreshedLeaderboard = await fetchLeaderboardData(context);
+                const refreshedLeaderboard = await redisService.getLeaderboard();
               setLeaderboard(refreshedLeaderboard);
-
             } catch (error) {
               console.error('Error saving score:', error);
               context.ui.showToast('Error saving score. Please try again.');
             }
             break;
+
           default:
-            throw new Error(`Unknown message type: ${message satisfies never}`);
+              throw new Error(`Unknown message type: ${message}`);
         }
       },
       onUnmount() {
@@ -162,41 +164,25 @@ Devvit.addCustomPostType({
       },
     });
 
-    // Render the simplified custom post type
+      // Refresh leaderboard data
+      const refreshLeaderboard = async () => {
+          const refreshedLeaderboard = await redisService.getLeaderboard();
+          setLeaderboard(refreshedLeaderboard);
+      };
+
+      // Render the custom post type
     return (
         <vstack grow padding="medium" cornerRadius="medium" border="thin">
           <text size="xlarge" weight="bold" align="center">Globe Explorer</text>
 
           {/* Game finished screen */}
           {gameJustFinished ? (
-              <vstack padding="large" spacing="medium" alignment="middle center">
-                <text size="large" weight="bold" align="center">Game Finished!</text>
-
-                <vstack
-                    background={isNewHighScore ? "success" : "secondary"}
-                    padding="large"
-                    cornerRadius="large"
-                    alignment="middle center"
-                    width="90%">
-
-                  <text size="medium" weight="bold">YOUR SCORE</text>
-                  <text size="xxlarge" weight="bold">{lastScore}</text>
-
-                  {isNewHighScore && (
-                      <vstack padding="medium" alignment="middle center">
-                        <text size="large" weight="bold" color="white">NEW HIGH SCORE!</text>
-                        <text size="small">Previous best: {score !== lastScore ? score : "None"}</text>
-                      </vstack>
-                  )}
-                </vstack>
-
-                <button
-                    onPress={() => setGameJustFinished(false)}
-                    color="brand"
-                    size="large">
-                  Continue
-                </button>
-              </vstack>
+              <GameFinishedScreen
+                  lastScore={lastScore}
+                  score={score}
+                  isNewHighScore={isNewHighScore}
+                  onContinue={() => setGameJustFinished(false)}
+              />
           ) : (
               /* User info and Play button */
               <vstack padding="medium" spacing="medium" alignment="middle center">
@@ -223,34 +209,12 @@ Devvit.addCustomPostType({
           )}
 
           {/* Always visible leaderboard */}
-          <vstack
-              padding="medium"
-              margin="medium"
-              border="thin"
-              cornerRadius="medium"
-              background="secondary">
-            <text size="large" weight="bold" align="center">Leaderboard</text>
-
-            {leaderboard && leaderboard.length > 0 ? (
-                leaderboard.map((entry, index) => (
-                    <hstack
-                        key={entry.userId}
-                        padding="small"
-                        border={index < leaderboard.length - 1 ? "bottom" : "none"}>
-                      <text size="medium" weight="bold">{index + 1}.</text>
-                      <spacer size="small" />
-                      <text size="medium">{entry.username}</text>
-                      <spacer grow />
-                      <text size="medium" weight="bold">{entry.score}</text>
-                    </hstack>
-                ))
-            ) : (
-                <vstack padding="medium" alignment="middle center">
-                  <text align="center">No scores yet.</text>
-                  <text align="center">Be the first explorer!</text>
-                </vstack>
-            )}
-          </vstack>
+            <Leaderboard
+                title="Leaderboard"
+                entries={leaderboard}
+                currentUserId={context.userId}
+                onRefresh={refreshLeaderboard}
+            />
         </vstack>
     );
   },

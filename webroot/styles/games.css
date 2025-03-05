@@ -1,0 +1,425 @@
+/* Game-specific styles for Globe Explorer */
+
+/* =========================
+   Shared Game Elements
+   ========================= */
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+    background-color: #272729;
+    border-radius: 4px;
+    border: 1px solid #343536;
+}
+
+.info-label {
+    color: #818384;
+}
+
+.info-value {
+    color: #FF4500;
+}
+
+.info-value-normal {
+    color: inherit;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    gap: 8px;
+}
+
+/* Animated target display */
+#animated-target-container {
+    position: fixed;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1500;
+    display: none;
+}
+
+#animated-target-display {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: rgba(26, 26, 27, 0.9);
+    color: #FF4500;
+    font-size: 36px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+    border: 2px solid #FF4500;
+}
+
+/* Modal styles for results */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1A1A1B;
+    padding: 20px;
+    border-radius: 4px;
+    color: #D7DADC;
+    z-index: 2000;
+    min-width: 300px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid #343536;
+}
+
+.modal-title {
+    color: #FF4500;
+    margin-top: 0;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.modal-header {
+    font-size: 12px;
+    color: #818384;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.results-list {
+    padding: 0;
+    text-align: left;
+    background-color: #272729;
+    border-radius: 4px;
+    border: 1px solid #343536;
+}
+
+.results-item {
+    padding: 8px 12px;
+}
+
+.results-item-border {
+    border-bottom: 1px solid #343536;
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* =========================
+   Population Target Game
+   ========================= */
+#minimized-selection-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    background-color: #1A1A1B;
+    color: #D7DADC;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    display: none;
+    border: 1px solid #343536;
+}
+
+.game-title {
+    text-align: center;
+    margin: 0 0 8px 0;
+    color: #FF4500;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#mini-selected-container {
+    margin-bottom: 5px;
+    background-color: #272729;
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid #343536;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.selection-label {
+    font-size: 11px;
+    color: #818384;
+    padding: 2px 3px;
+    margin-bottom: 3px;
+}
+
+.country-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 5px;
+    font-size: 11px;
+}
+
+.country-border-bottom {
+    border-bottom: 1px solid #343536;
+}
+
+.country-vote {
+    color: #FF4500;
+    margin-right: 3px;
+    font-size: 9px;
+}
+
+.country-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 130px;
+    flex: 1;
+}
+
+.country-population {
+    color: #818384;
+}
+
+/* =========================
+   Quiz Game
+   ========================= */
+#quiz-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    background-color: #1A1A1B;
+    color: #D7DADC;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    font-family: "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px;
+    display: none;
+    border: 1px solid #343536;
+}
+
+.quiz-title {
+    text-align: center;
+    margin: 0 0 5px 0;
+    color: #FF8C00;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.difficulty-badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+
+.difficulty-easy {
+    background-color: #4CAF50;
+}
+
+.difficulty-medium {
+    background-color: #FF9800;
+}
+
+.difficulty-hard {
+    background-color: #F44336;
+}
+
+.question-container {
+    padding: 7px;
+    background-color: #272729;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    border: 1px solid #343536;
+    font-size: 12px;
+}
+
+.counter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #272729;
+    border-radius: 4px;
+    border: 1px solid #343536;
+    font-size: 11px;
+}
+
+.counter-label {
+    color: #818384;
+}
+
+.counter-value {
+    font-weight: bold;
+}
+
+#quiz-selected-container {
+    margin-bottom: 10px;
+    max-height: 120px;
+    overflow-y: auto;
+    background-color: #272729;
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid #343536;
+    font-size: 11px;
+}
+
+.no-selection-message {
+    color: #818384;
+    font-style: italic;
+    text-align: center;
+    padding: 7px;
+    font-size: 11px;
+}
+
+.quiz-country-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+}
+
+.quiz-country-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.quiz-country-code {
+    color: #818384;
+}
+
+/* Quiz Results Modal */
+.quiz-results-container {
+    width: 100%;
+    font-size: 14px;
+}
+
+.quiz-score-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: #272729;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.score-section {
+    text-align: center;
+    flex: 1;
+}
+
+.score-label {
+    font-size: 10px;
+    color: #818384;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.round-score {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.round-score-positive {
+    color: #4CAF50;
+}
+
+.round-score-negative {
+    color: #F44336;
+}
+
+.total-score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF8C00;
+}
+
+.results-container {
+    background-color: #272729;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.results-section-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.quiz-explanation {
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: #D7DADC;
+    line-height: 1.4;
+    font-style: italic;
+    opacity: 0.9;
+    background-color: #1A1A1B;
+    padding: 10px;
+    border-radius: 4px;
+    border-left: 2px solid #FF8C00;
+}
+
+.results-section-list {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.results-item-correct {
+    padding: 3px 0;
+    color: #4CAF50;
+}
+
+.results-item-incorrect {
+    padding: 3px 0;
+    color: #F44336;
+}
+
+.results-item-missed {
+    padding: 3px 0;
+    color: #FF9800;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #minimized-selection-panel, #quiz-panel {
+        width: 250px;
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .game-title {
+        font-size: 13px;
+    }
+
+    #animated-target-display {
+        font-size: 28px;
+        padding: 12px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    #minimized-selection-panel, #quiz-panel {
+        width: 220px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .country-name {
+        max-width: 100px;
+    }
+
+    .quiz-score-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

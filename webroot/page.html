@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Geography Games</title>
-    <link rel="stylesheet" href="style.css"/>
+    <title>Globe Explorer</title>
+    <link rel="stylesheet" href="styles/main.css"/>
 </head>
 <body>
+<!-- Back button -->
 <div id="exit-button" class="exit-button">
     <button>
         <span class="exit-icon">⬅</span>
         Back to Games
     </button>
 </div>
+
+<!-- Main canvas container -->
 <div id="canvas-container"></div>
+
+<!-- Loading indicator -->
 <div id="loading">Loading globe data...</div>
-<div id="show-game-button"></div>
+
+<!-- Game selector -->
 <div id="arcade-game-selector" class="game-selector">
     <!-- Population Game Block -->
     <div id="population-game" class="game-block population-game">
@@ -101,19 +107,5 @@
     </div>
 </div>
 
-<!-- Load the original globe visualization JavaScript -->
-<script src="scripts/globe/globe.js"></script>
-
-<!-- Load game utilities -->
-<script src="scripts/games/population/utilities.js"></script>
-<script src="scripts/games/population/ui.js"></script>
-<script src="scripts/games/population/game.js"></script>
-<script src="scripts/games/population/main.js"></script>
-
-<!-- Load the quiz game JavaScript -->
-<script src="scripts/games/quiz/main.js"></script>
-
-<!-- Load the game functions exposure script -->
-<script src="scripts/game-functions.js"></script>
-</body>
-</html>
+<!-- Main JavaScript entry point -->
+<script type="module" src="index.js"></script>
