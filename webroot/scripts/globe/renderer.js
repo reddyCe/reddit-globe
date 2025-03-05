@@ -121,6 +121,170 @@ export function drawGlobe(appContext) {
 }
 
 /**
+ * Highlight a specific location on the globe
+ * @param {Object} appContext - Application context
+ * @param {Object} location - Location data {lat, lng, name}
+ */
+function highlightLocation(appContext, location) {
+    const {ctx, centerX, centerY} = appContext;
+
+    // Calculate point projection
+    const point = projectGlobePoint(appContext, location.lat, location.lng);
+
+    // Only draw if point is on the visible side of the globe (z > 0)
+    if (point.z <= 0) return;
+
+    // Draw marker with pulse effect
+    ctx.save();
+
+    // Draw glow
+    const gradient = ctx.createRadialGradient(
+        point.x, point.y, 0,
+        point.x, point.y, 15
+    );
+    gradient.addColorStop(0, 'rgba(255, 215, 0, 0.8)');
+    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 15, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Draw marker dot
+    ctx.fillStyle = 'gold';
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Add name label if needed
+    if (location.name) {
+        ctx.font = '14px Arial, sans-serif';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 4;
+        ctx.fillText(location.name, point.x, point.y - 15);
+        ctx.shadowBlur = 0;
+    }
+
+    ctx.restore();
+}
+
+/**
+ * Draw latitude and longitude grid lines on the globe
+ * @param {Object} appContext - Application context
+ */
+function drawGridLines(appContext) {
+    const {ctx, centerX, centerY, rotation, zoomScale} = appContext;
+
+    // Set line style for grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.lineWidth = 0.5;
+
+    // Draw longitude lines (vertical)
+    for (let lng = -180; lng <= 180; lng += 30) {
+        ctx.beginPath();
+
+        // Draw points along the longitude line
+        for (let lat = -90; lat <= 90; lat += 5) {
+            const point = projectGlobePoint(appContext, lat, lng);
+
+            // Only draw points on the visible side of the globe (z > 0)
+            if (point.z > 0) {
+                if (lat === -90) {
+                    ctx.moveTo(point.x, point.y);
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            }
+        }
+
+        ctx.stroke();
+    }
+
+    // Draw latitude lines (horizontal)
+    for (let lat = -90; lat <= 90; lat += 30) {
+        // Skip poles
+        if (lat === -90 || lat === 90) continue;
+
+        ctx.beginPath();
+
+        // Draw points along the latitude line
+        let firstPoint = null;
+        for (let lng = -180; lng <= 180; lng += 5) {
+            const point = projectGlobePoint(appContext, lat, lng);
+
+            // Only draw points on the visible side of the globe (z > 0)
+            if (point.z > 0) {
+                if (!firstPoint) {
+                    ctx.moveTo(point.x, point.y);
+                    firstPoint = point;
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            }
+        }
+
+        ctx.stroke();
+    }
+}
+
+/**
+ * Project 3D globe coordinates to 2D screen coordinates
+ * @param {Object} appContext - Application context
+ * @param {number} lat - Latitude in degrees
+ * @param {number} lng - Longitude in degrees
+ * @returns {Object} Projected point {x, y, z}
+ */
+function projectGlobePoint(appContext, lat, lng) {
+    const {centerX, centerY, rotation, zoomScale} = appContext;
+    const EARTH_RADIUS = 240;
+
+    // Convert to radians
+    const latRad = (lat * Math.PI) / 180;
+    const lngRad = (lng * Math.PI) / 180;
+
+    // Calculate 3D coordinates on a sphere
+    const x = EARTH_RADIUS * Math.cos(latRad) * Math.sin(lngRad);
+    const y = EARTH_RADIUS * Math.sin(latRad);
+    const z = EARTH_RADIUS * Math.cos(latRad) * Math.cos(lngRad);
+
+    // Apply rotation to get the visible coordinates
+    const rotatedPoint = rotatePoint(x, y, z, rotation);
+
+    // Apply zoom and project 3D to 2D
+    return {
+        x: centerX + rotatedPoint.x * zoomScale,
+        y: centerY - rotatedPoint.y * zoomScale,
+        z: rotatedPoint.z / EARTH_RADIUS // Normalized z for depth
+    };
+}
+
+/**
+ * Rotate a point in 3D space
+ * @param {number} x - X coordinate
+ * @param {number} y - Y coordinate
+ * @param {number} z - Z coordinate
+ * @param {Object} rotation - Rotation angles {x, y}
+ * @returns {Object} Rotated point {x, y, z}
+ */
+function rotatePoint(x, y, z, rotation) {
+    // Rotate around X axis
+    const y1 = y * Math.cos(rotation.x) - z * Math.sin(rotation.x);
+    const z1 = y * Math.sin(rotation.x) + z * Math.cos(rotation.x);
+
+    // Rotate around Y axis
+    const x2 = x * Math.cos(rotation.y) + z1 * Math.sin(rotation.y);
+    const z2 = -x * Math.sin(rotation.y) + z1 * Math.cos(rotation.y);
+
+    return {x: x2, y: y1, z: z2};
+}
+
+/**
  * Draw a base dark globe
  * @param {Object} appContext - Application context
  */
