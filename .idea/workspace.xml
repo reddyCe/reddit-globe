@@ -7,11 +7,7 @@
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/quiz/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/globe.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
