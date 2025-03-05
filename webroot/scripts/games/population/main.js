@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupGameEventListeners();
 });
 
-// Arcade Game Selector Implementation
+// Arcade Game Selector Implementation - FIXED VERSION
 function initArcadeGameSelector() {
     // Remove existing game buttons if they exist
     const existingGameBtn = document.getElementById('show-game-button');
@@ -28,28 +28,6 @@ function initArcadeGameSelector() {
 
     if (existingGameBtn) document.body.removeChild(existingGameBtn);
     if (existingQuizBtn) document.body.removeChild(existingQuizBtn);
-
-    // Create the HTML structure
-    const selectorHTML = `
-    <div id="arcade-game-selector" class="game-selector">
-      <div id="population-game" class="game-block population-game">
-        <h3 class="game-title">POPULATION TARGET</h3>
-        <p class="game-desc">Match the target population by selecting countries</p>
-        <div class="game-score">KARMA: <span id="population-score">0</span></div>
-      </div>
-      
-      <div id="quiz-game" class="game-block quiz-game">
-        <h3 class="game-title">GEOGRAPHY QUIZ</h3>
-        <p class="game-desc">Test your knowledge of countries and geography</p>
-        <div class="game-score">SCORE: <span id="quiz-score">0</span></div>
-      </div>
-    </div>
-  `;
-
-    // Insert the HTML into the document
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = selectorHTML;
-    document.body.appendChild(tempDiv.firstElementChild);
 
     // Get references to the elements
     const gameSelector = document.getElementById('arcade-game-selector');
@@ -59,43 +37,43 @@ function initArcadeGameSelector() {
     const quizScore = document.getElementById('quiz-score');
 
     // Update initial scores if available
-    if (window.gameScore !== undefined) {
-        populationScore.textContent = window.gameScore;
+    if (gameScore !== undefined) {
+        populationScore.textContent = gameScore;
     }
 
-    if (window.quizScore !== undefined) {
-        quizScore.textContent = window.quizScore;
+    if (quizScore !== undefined) {
+        quizScore.textContent = quizScore;
     }
 
     // Add event listeners to game blocks
     populationBlock.addEventListener('click', () => {
-        if (!window.gameActive) {
+        if (!gameActive) {
             // Start the game and hide the selector
-            window.startNewGame();
+            startNewGame(); // Use the function directly without window prefix
             gameSelector.style.opacity = '0';
             setTimeout(() => {
                 gameSelector.style.display = 'none';
             }, 300);
         } else {
-            window.quitGame();
+            quitGame(); // Use the function directly without window prefix
         }
     });
 
     quizBlock.addEventListener('click', () => {
-        if (!window.quizActive) {
+        if (!quizActive) {
             // Start the quiz and hide the selector
-            window.startQuizGame();
+            startQuizGame(); // Use the function directly without window prefix
             gameSelector.style.opacity = '0';
             setTimeout(() => {
                 gameSelector.style.display = 'none';
             }, 300);
         } else {
-            window.quitQuizGame();
+            quitQuizGame(); // Use the function directly without window prefix
         }
     });
 
     // Override the quit functions to show the selector
-    const originalQuitGame = window.quitGame;
+    const originalQuitGame = quitGame;
     window.quitGame = function () {
         originalQuitGame();
         // Show game selector with animation
@@ -105,7 +83,7 @@ function initArcadeGameSelector() {
         }, 10);
     };
 
-    const originalQuitQuizGame = window.quitQuizGame;
+    const originalQuitQuizGame = quitQuizGame;
     window.quitQuizGame = function () {
         originalQuitQuizGame();
         // Show game selector with animation
@@ -120,17 +98,17 @@ function initArcadeGameSelector() {
         // Check if it's a game finished event
         if (event.data && event.data.type === 'gameFinished') {
             // Update scores
-            if (window.gameScore !== undefined) {
-                populationScore.textContent = window.gameScore;
+            if (gameScore !== undefined) {
+                populationScore.textContent = gameScore;
             }
 
-            if (window.quizScore !== undefined) {
-                quizScore.textContent = window.quizScore;
+            if (quizScore !== undefined) {
+                quizScore.textContent = quizScore;
             }
 
             // Show the game selector after a small delay
             setTimeout(() => {
-                if (!window.gameActive && !window.quizActive) {
+                if (!gameActive && !quizActive) {
                     gameSelector.style.display = 'flex';
                     setTimeout(() => {
                         gameSelector.style.opacity = '1';
@@ -152,6 +130,6 @@ setupEventListeners = function() {
     window.addEventListener('load', () => {
         setTimeout(() => {
             initArcadeGameSelector();
-        }, 500);
+        }, 1000); // Increased delay to make sure all scripts are loaded
     });
 };

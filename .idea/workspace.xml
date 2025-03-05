@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="add quiz game">
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/game-functions.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/game.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/games/population/ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +92,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740832562486</updated>
-      <workItem from="1740832563522" duration="49338000" />
+      <workItem from="1740832563522" duration="51269000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -117,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741120292083</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add quiz game">
+      <option name="closed" value="true" />
+      <created>1741121982064</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1741121982064</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

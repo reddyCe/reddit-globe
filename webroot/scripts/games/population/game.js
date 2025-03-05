@@ -172,9 +172,7 @@ function calculateScore() {
         {
             type: 'gameFinished',
             data: {
-                roundScore: roundScore,
-                percentDifference: percentDiff,
-                streak: window.currentStreak
+                roundScore: roundScore
             },
         },
         '*'

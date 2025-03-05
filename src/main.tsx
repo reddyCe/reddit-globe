@@ -209,7 +209,7 @@ Devvit.addCustomPostType({
                     <hstack>
                       <text size="medium">Your Best Score:</text>
                       <spacer size="xsmall" />
-                      <text size="large" weight="bold" color="blurple">{score}</text>
+                      <text size="large" weight="bold" color="white">{score}</text>
                     </hstack>
                 )}
 

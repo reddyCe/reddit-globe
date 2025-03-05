@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Geography Games</title>
-  <link rel="stylesheet" href="style.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Geography Games</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 <div id="canvas-container"></div>
 <div id="loading">Loading globe data...</div>
-
+<div id="show-game-button"></div>
 <div id="arcade-game-selector" class="game-selector">
     <!-- Population Game Block -->
     <div id="population-game" class="game-block population-game">
@@ -28,7 +28,7 @@
 
 <!-- Animated target display -->
 <div id="animated-target-container">
-  <div id="animated-target-display"></div>
+    <div id="animated-target-display"></div>
 </div>
 
 <!-- Country tooltip -->
@@ -106,5 +106,8 @@
 
 <!-- Load the quiz game JavaScript -->
 <script src="scripts/games/quiz/main.js"></script>
+
+<!-- Load the game functions exposure script -->
+<script src="scripts/game-functions.js"></script>
 </body>
 </html>
