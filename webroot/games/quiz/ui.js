@@ -249,7 +249,7 @@ export function showQuizResults(results) {
 
     modalContent.appendChild(resultsSection);
 
-    // Show the modal
+    // Show the modal - Change size from 'medium' to 'large' for more space
     showModal({
         title: 'Quiz Results',
         content: modalContent,
@@ -264,6 +264,6 @@ export function showQuizResults(results) {
                 type: 'secondary'
             }
         ],
-        size: 'medium'
+        size: 'large'
     });
 }

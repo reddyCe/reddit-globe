@@ -1,5 +1,5 @@
 /**
- * Globe interaction module
+ * Globe interaction module - IMPROVED VERSION
  * Handles mouse and touch interactions with the globe
  */
 import {hideTooltip, showTooltip} from '../../components/tooltip.js';
@@ -7,15 +7,25 @@ import {hideTooltip, showTooltip} from '../../components/tooltip.js';
 // Constants for interactions
 const MIN_ZOOM = 0.5;  // Half size
 const MAX_ZOOM = 7.0;  // 7x size
-const ZOOM_SPEED = 0.1;
-const DRAG_THRESHOLD = 5; // pixels
-const CLICK_TIMEOUT = 200; // milliseconds
+const ZOOM_SPEED = 0.1; // Original zoom speed value (restored)
+const DRAG_THRESHOLD = 3; // pixels - reduced for more responsive dragging
+const CLICK_TIMEOUT = 250; // milliseconds
+const ROTATION_INERTIA = 0.92; // Higher values = longer spin (0.95 = long, 0.8 = short)
+const MAX_ROTATION_SPEED = 0.03; // Prevent too fast rotation
 
 // Interaction state
 let dragging = false;
 let lastX, lastY;
 let dragStartTime = 0;
 let mouseHasMoved = false;
+let rotationVelocity = {x: 0, y: 0};
+let useInertia = true;
+let inertiaAnimationId = null;
+
+// For double-touch (pinch)
+let initialPinchDistance = 0;
+let initialZoomScale = 1.0;
+let lastPinchCenter = {x: 0, y: 0};
 
 /**
  * Set up all event listeners for globe interactions
@@ -32,16 +42,19 @@ export function setupInteractions(appContext) {
     canvas.addEventListener('mouseleave', () => handleMouseLeave(appContext));
 
     // Touch events for mobile
-    canvas.addEventListener('touchstart', (e) => handleTouchStart(e, appContext));
-    canvas.addEventListener('touchmove', (e) => handleTouchMove(e, appContext));
-    canvas.addEventListener('touchend', (e) => handleTouchEnd(e, appContext));
-    canvas.addEventListener('touchcancel', (e) => handleTouchEnd(e, appContext));
+    canvas.addEventListener('touchstart', (e) => handleTouchStart(e, appContext), {passive: false});
+    canvas.addEventListener('touchmove', (e) => handleTouchMove(e, appContext), {passive: false});
+    canvas.addEventListener('touchend', (e) => handleTouchEnd(e, appContext), {passive: false});
+    canvas.addEventListener('touchcancel', (e) => handleTouchEnd(e, appContext), {passive: false});
 
     // Window resize event
     window.addEventListener('resize', () => handleWindowResize(appContext));
 
     // Exit button handler
     setupExitButtonHandler(appContext);
+
+    // Disable context menu on canvas for better touch experience
+    canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
     console.log('Globe interactions initialized');
 }
@@ -52,11 +65,17 @@ export function setupInteractions(appContext) {
  * @param {Object} appContext - Application context
  */
 function handleMouseDown(e, appContext) {
+    // Stop any ongoing inertia animation
+    stopInertiaAnimation();
+
     dragging = true;
     lastX = e.clientX;
     lastY = e.clientY;
     dragStartTime = Date.now();
     mouseHasMoved = false;
+
+    // Reset velocity when starting new drag
+    rotationVelocity = {x: 0, y: 0};
 
     // Store in app context
     appContext.dragging = true;
@@ -71,6 +90,7 @@ function handleMouseMove(e, appContext) {
     if (dragging) {
         const deltaX = e.clientX - lastX;
         const deltaY = e.clientY - lastY;
+        const timeElapsed = Date.now() - dragStartTime;
 
         // Check if mouse has moved enough to be considered a drag
         if (Math.abs(deltaX) > DRAG_THRESHOLD || Math.abs(deltaY) > DRAG_THRESHOLD) {
@@ -78,9 +98,22 @@ function handleMouseMove(e, appContext) {
             appContext.mouseHasMoved = true;
         }
 
+        // Calculate rotation delta with damping for smoother control
+        const damping = Math.min(1.0, timeElapsed / 200); // Gradual increase in responsiveness
+        const rotXDelta = deltaY * 0.01 * damping;
+        const rotYDelta = deltaX * 0.01 * damping;
+
         // Update rotation
-        appContext.rotation.y += deltaX * 0.01;
-        appContext.rotation.x += deltaY * 0.01;
+        appContext.rotation.y += rotYDelta;
+        appContext.rotation.x += rotXDelta;
+
+        // Update velocity for inertia - weighted average with previous velocity
+        rotationVelocity.x = rotationVelocity.x * 0.8 + rotXDelta * 0.2;
+        rotationVelocity.y = rotationVelocity.y * 0.8 + rotYDelta * 0.2;
+
+        // Limit rotation velocity
+        rotationVelocity.x = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.x));
+        rotationVelocity.y = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.y));
 
         // Limit vertical rotation to avoid flipping
         appContext.rotation.x = Math.max(-Math.PI / 2 + 0.1,
@@ -112,6 +145,9 @@ function handleMouseUp(e, appContext) {
     if (dragging && !mouseHasMoved && dragDuration < CLICK_TIMEOUT) {
         // This was a legitimate click (not a drag)
         handleGlobeClick(e, appContext);
+    } else if (useInertia && (Math.abs(rotationVelocity.x) > 0.001 || Math.abs(rotationVelocity.y) > 0.001)) {
+        // Start inertia if we have significant velocity
+        startInertiaAnimation(appContext);
     }
 
     dragging = false;
@@ -127,14 +163,19 @@ function handleMouseUp(e, appContext) {
 function handleMouseWheel(e, appContext) {
     e.preventDefault();
 
-    // Determine zoom direction
+    // Stop any ongoing inertia when user starts zooming
+    stopInertiaAnimation();
+
+    // Determine zoom direction - using the original simple approach
     const zoomDirection = e.deltaY > 0 ? -1 : 1;
 
-    // Apply zoom
+    // Apply zoom using the original formula that worked well
     appContext.zoomScale += zoomDirection * ZOOM_SPEED;
 
     // Enforce zoom limits
     appContext.zoomScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, appContext.zoomScale));
+
+    // Force redraw
     appContext.needsRedraw = true;
 }
 
@@ -145,6 +186,9 @@ function handleMouseWheel(e, appContext) {
 function handleMouseLeave(appContext) {
     hideTooltip();
     appContext.hoveredFeature = null;
+
+    // Don't cancel dragging on mouse leave - this allows dragging outside the canvas
+    // This makes the control feel more natural
 }
 
 /**
@@ -155,6 +199,9 @@ function handleMouseLeave(appContext) {
 function handleTouchStart(e, appContext) {
     e.preventDefault();
 
+    // Stop any ongoing inertia animation
+    stopInertiaAnimation();
+
     if (e.touches.length === 1) {
         // Single touch - similar to mousedown
         dragging = true;
@@ -164,18 +211,36 @@ function handleTouchStart(e, appContext) {
         dragStartTime = Date.now();
         mouseHasMoved = false;
         appContext.mouseHasMoved = false;
+
+        // Reset velocity when starting new drag
+        rotationVelocity = {x: 0, y: 0};
     } else if (e.touches.length === 2) {
-        // Two finger touch - prepare for pinch zoom
+        // Two finger touch - prepare for pinch zoom and two-finger rotation
         const touch1 = e.touches[0];
         const touch2 = e.touches[1];
-        const initialDistance = Math.hypot(
+
+        // Calculate center point between the two touches
+        lastPinchCenter = {
+            x: (touch1.clientX + touch2.clientX) / 2,
+            y: (touch1.clientY + touch2.clientY) / 2
+        };
+
+        // Calculate initial distance for pinch zoom
+        initialPinchDistance = Math.hypot(
             touch2.clientX - touch1.clientX,
             touch2.clientY - touch1.clientY
         );
 
-        // Store initial distance for pinch zoom calculation
-        appContext.initialPinchDistance = initialDistance;
-        appContext.initialZoomScale = appContext.zoomScale;
+        initialZoomScale = appContext.zoomScale;
+
+        // Also handle the angle for rotation
+        appContext.initialPinchAngle = Math.atan2(
+            touch2.clientY - touch1.clientY,
+            touch2.clientX - touch1.clientX
+        );
+
+        // Disable regular dragging
+        dragging = false;
     }
 }
 
@@ -191,6 +256,7 @@ function handleTouchMove(e, appContext) {
         // Single touch movement - handle rotation
         const deltaX = e.touches[0].clientX - lastX;
         const deltaY = e.touches[0].clientY - lastY;
+        const timeElapsed = Date.now() - dragStartTime;
 
         // Check if touch has moved enough to be considered a drag
         if (Math.abs(deltaX) > DRAG_THRESHOLD || Math.abs(deltaY) > DRAG_THRESHOLD) {
@@ -198,8 +264,22 @@ function handleTouchMove(e, appContext) {
             appContext.mouseHasMoved = true;
         }
 
-        appContext.rotation.y += deltaX * 0.01;
-        appContext.rotation.x += deltaY * 0.01;
+        // Calculate rotation delta with damping for smoother control
+        const damping = Math.min(1.0, timeElapsed / 200);
+        const rotXDelta = deltaY * 0.01 * damping;
+        const rotYDelta = deltaX * 0.01 * damping;
+
+        // Update rotation
+        appContext.rotation.y += rotYDelta;
+        appContext.rotation.x += rotXDelta;
+
+        // Update velocity for inertia
+        rotationVelocity.x = rotationVelocity.x * 0.8 + rotXDelta * 0.2;
+        rotationVelocity.y = rotationVelocity.y * 0.8 + rotYDelta * 0.2;
+
+        // Limit rotation velocity
+        rotationVelocity.x = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.x));
+        rotationVelocity.y = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.y));
 
         // Limit vertical rotation to avoid flipping
         appContext.rotation.x = Math.max(-Math.PI / 2 + 0.1,
@@ -212,21 +292,48 @@ function handleTouchMove(e, appContext) {
 
         // Process hover while dragging
         processPointForHover(e.touches[0].clientX, e.touches[0].clientY, appContext);
-    } else if (e.touches.length === 2 && appContext.initialPinchDistance > 0) {
-        // Two finger touch - handle pinch zoom
+    } else if (e.touches.length === 2) {
+        // Two finger touch - handle pinch zoom and rotation
         const touch1 = e.touches[0];
         const touch2 = e.touches[1];
+
+        // Calculate current center point
+        const currentPinchCenter = {
+            x: (touch1.clientX + touch2.clientX) / 2,
+            y: (touch1.clientY + touch2.clientY) / 2
+        };
+
+        // Calculate current distance
         const currentDistance = Math.hypot(
             touch2.clientX - touch1.clientX,
             touch2.clientY - touch1.clientY
         );
 
-        // Calculate zoom factor based on pinch distance change
-        const factor = currentDistance / appContext.initialPinchDistance;
-        appContext.zoomScale = appContext.initialZoomScale * factor;
+        // Calculate current angle for rotation
+        const currentAngle = Math.atan2(
+            touch2.clientY - touch1.clientY,
+            touch2.clientX - touch1.clientX
+        );
 
-        // Enforce zoom limits
-        appContext.zoomScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, appContext.zoomScale));
+        // Calculate zoom factor based on distance change - using direct approach
+        const pinchDelta = currentDistance / initialPinchDistance;
+
+        // Apply zoom directly without additional smoothing
+        appContext.zoomScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM,
+            initialZoomScale * pinchDelta));
+
+        // Handle two-finger rotation (optional - only if initial angle was set)
+        if (appContext.initialPinchAngle !== undefined) {
+            const rotationDelta = currentAngle - appContext.initialPinchAngle;
+            // This rotates around the z-axis (screen normal)
+            // We map this to y-axis rotation for the globe
+            appContext.rotation.y += rotationDelta * 0.5; // Scale down for smoother control
+            appContext.initialPinchAngle = currentAngle; // Update for continuous rotation
+        }
+
+        // Update last pinch center
+        lastPinchCenter = currentPinchCenter;
+
         appContext.needsRedraw = true;
     }
 }
@@ -249,17 +356,64 @@ function handleTouchEnd(e, appContext) {
                 clientX: touch.clientX,
                 clientY: touch.clientY
             }, appContext);
+        } else if (useInertia && (Math.abs(rotationVelocity.x) > 0.001 || Math.abs(rotationVelocity.y) > 0.001)) {
+            // Start inertia if we have velocity
+            startInertiaAnimation(appContext);
         }
     }
 
-    // Reset dragging state
+    // Reset states
     dragging = false;
     appContext.dragging = false;
-
-    // Reset pinch zoom tracking
     appContext.initialPinchDistance = 0;
+    appContext.initialPinchAngle = undefined;
 
     appContext.needsRedraw = true;
+}
+
+/**
+ * Start inertia animation for smooth rotation after drag
+ * @param {Object} appContext - Application context
+ */
+function startInertiaAnimation(appContext) {
+    // Cancel any existing animation
+    stopInertiaAnimation();
+
+    // Function to update rotation with inertia
+    function applyInertia() {
+        // Apply velocity with decay
+        appContext.rotation.x += rotationVelocity.x;
+        appContext.rotation.y += rotationVelocity.y;
+
+        // Limit vertical rotation to avoid flipping
+        appContext.rotation.x = Math.max(-Math.PI / 2 + 0.1,
+            Math.min(Math.PI / 2 - 0.1, appContext.rotation.x));
+
+        // Apply decay to velocity
+        rotationVelocity.x *= ROTATION_INERTIA;
+        rotationVelocity.y *= ROTATION_INERTIA;
+
+        // Stop when velocity becomes very small
+        if (Math.abs(rotationVelocity.x) < 0.0001 && Math.abs(rotationVelocity.y) < 0.0001) {
+            stopInertiaAnimation();
+            return;
+        }
+
+        appContext.needsRedraw = true;
+        inertiaAnimationId = requestAnimationFrame(() => applyInertia());
+    }
+
+    inertiaAnimationId = requestAnimationFrame(applyInertia);
+}
+
+/**
+ * Stop inertia animation
+ */
+function stopInertiaAnimation() {
+    if (inertiaAnimationId !== null) {
+        cancelAnimationFrame(inertiaAnimationId);
+        inertiaAnimationId = null;
+    }
 }
 
 /**
@@ -284,6 +438,9 @@ function setupExitButtonHandler(appContext) {
     const exitButton = document.getElementById('exit-button');
     if (exitButton) {
         exitButton.addEventListener('click', () => {
+            // Stop any ongoing inertia animation
+            stopInertiaAnimation();
+
             // Check if any game is active and quit it
             if (appContext.gameActive) {
                 appContext.quitGame();
