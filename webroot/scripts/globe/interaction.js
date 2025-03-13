@@ -100,9 +100,10 @@ function handleMouseMove(e, appContext) {
 
         // Calculate rotation delta with damping for smoother control
         const damping = Math.min(1.0, timeElapsed / 200); // Gradual increase in responsiveness
-        const rotXDelta = deltaY * 0.01 * damping;
-        const rotYDelta = deltaX * 0.01 * damping;
-
+        // Apply inverse zoom scaling to rotation - slower rotation when zoomed in
+        const zoomFactor = 1 / Math.max(1, appContext.zoomScale);
+        const rotXDelta = deltaY * 0.01 * damping * zoomFactor;
+        const rotYDelta = deltaX * 0.01 * damping * zoomFactor;
         // Update rotation
         appContext.rotation.y += rotYDelta;
         appContext.rotation.x += rotXDelta;
@@ -265,9 +266,13 @@ function handleTouchMove(e, appContext) {
         }
 
         // Calculate rotation delta with damping for smoother control
-        const damping = Math.min(1.0, timeElapsed / 200);
-        const rotXDelta = deltaY * 0.01 * damping;
-        const rotYDelta = deltaX * 0.01 * damping;
+        const damping = Math.min(1.0, timeElapsed / 200); // Gradual increase in responsiveness
+
+        // Apply inverse zoom scaling to rotation - slower rotation when zoomed in
+        const zoomFactor = 0.8 / Math.max(1, appContext.zoomScale);
+
+        const rotXDelta = deltaY * 0.01 * damping * zoomFactor;
+        const rotYDelta = deltaX * 0.01 * damping * zoomFactor;
 
         // Update rotation
         appContext.rotation.y += rotYDelta;
