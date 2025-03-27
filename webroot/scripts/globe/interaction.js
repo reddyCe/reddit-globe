@@ -6,7 +6,7 @@ import {hideTooltip, showTooltip} from '../../components/tooltip.js';
 
 // Constants for interactions
 const MIN_ZOOM = 0.5;  // Half size
-const MAX_ZOOM = 7.0;  // 7x size
+const MAX_ZOOM = 70.0;  // 7x size
 const ZOOM_SPEED = 0.1; // Original zoom speed value (restored)
 const DRAG_THRESHOLD = 3; // pixels - reduced for more responsive dragging
 const CLICK_TIMEOUT = 250; // milliseconds
@@ -523,7 +523,7 @@ function processPointForHover(clientX, clientY, appContext) {
 
             // Get property names based on GeoJSON structure
             const name = feature.properties.name || feature.properties.NAME || "Unknown";
-            const code = feature.properties.code || feature.properties.ISO_A3 || "Unknown";
+            const code = feature.properties.code || feature.properties.iso_a3 || "Unknown";
 
             // Show tooltip with country info
             showTooltip({
@@ -585,8 +585,8 @@ function handleGlobeClick(e, appContext) {
                 lat: clickLatLng.lat,
                 lng: clickLatLng.lng,
                 name: feature.properties.name || feature.properties.NAME || "Unknown",
-                code: feature.properties.code || feature.properties.ISO_A3 || "Unknown",
-                details: `Population: ${formatNumber(feature.properties.population || feature.properties.POP_EST)}, ` +
+                code: feature.properties.code || feature.properties.iso_a3 || "Unknown",
+                details: `Population: ${formatNumber(feature.properties.population || feature.properties.pop_est)}, ` +
                     `Continent: ${feature.properties.continent || feature.properties.CONTINENT || "Unknown"}`
             };
 

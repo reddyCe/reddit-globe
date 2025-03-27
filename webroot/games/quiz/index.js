@@ -178,6 +178,9 @@ function resetQuizSelections(appContext) {
     // Clear correct countries highlight
     appContext.quizCorrectCountries = [];
 
+    // Update app context to point to the new empty array
+    appContext.quizSelectedCountries = [];
+
     // Update UI
     updateQuizUI(quizState);
 

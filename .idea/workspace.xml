@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="fix rotation">
+      <change afterPath="$PROJECT_DIR$/webroot/assets/data/custom.geo.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/assets/data/globe.geojson" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/games/population/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/games/population/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/ui.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/games/quiz/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/quiz/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/data.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/interaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +67,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/RedonBettermile/WebstormProjects/redon-reddit-dev/webroot/assets/data&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -71,6 +78,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/webroot/assets/data" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/webroot/scripts/globe" />
     </key>
@@ -91,6 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740832562486</updated>
       <workItem from="1740832563522" duration="51269000" />
+      <workItem from="1743106858346" duration="1179000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -164,7 +175,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741864945680</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fix rotation">
+      <option name="closed" value="true" />
+      <created>1741865749325</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1741865749325</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -201,7 +220,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/webroot/scripts/globe/renderer.js</url>
           <line>325</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>

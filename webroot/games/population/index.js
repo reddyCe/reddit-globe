@@ -90,9 +90,9 @@ function startNewGame(appContext) {
  */
 function handleCountrySelection(feature, appContext) {
     // Get country information
-    const countryCode = feature.properties.code || feature.properties.ISO_A3;
+    const countryCode = feature.properties.code || feature.properties.iso_a3;
     const countryName = feature.properties.name || feature.properties.NAME;
-    const population = feature.properties.population || feature.properties.POP_EST || 0;
+    const population = feature.properties.population || feature.properties.pop_est || 0;
 
     // Check if country is already selected
     if (gameState.selectedCountries.find(c => c.code === countryCode)) {
@@ -160,6 +160,9 @@ function finishRound(appContext) {
  */
 function resetSelections(appContext) {
     gameState.clearSelections();
+
+    // Update app context to point to the new empty array
+    appContext.gameSelectedCountries = [];
 
     // Update UI
     updateGameUI(gameState);

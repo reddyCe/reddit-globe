@@ -178,13 +178,6 @@ export function showRoundResults(targetPopulation, totalPopulation, difference, 
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'button-container';
 
-    const newGameBtn = document.createElement('button');
-    newGameBtn.textContent = 'New Round';
-    newGameBtn.className = 'button-primary';
-    newGameBtn.addEventListener('click', () => {
-        document.body.removeChild(modal);
-        // Wait for next click to start a new game
-    });
 
     const closeBtn = document.createElement('button');
     closeBtn.textContent = 'Close';
@@ -193,7 +186,6 @@ export function showRoundResults(targetPopulation, totalPopulation, difference, 
         document.body.removeChild(modal);
     });
 
-    buttonContainer.appendChild(newGameBtn);
     buttonContainer.appendChild(closeBtn);
     modal.appendChild(buttonContainer);
 

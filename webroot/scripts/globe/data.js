@@ -8,7 +8,7 @@
  */
 export async function loadGeoJsonData() {
     try {
-        const response = await fetch('./assets/data/globe.geojson');
+        const response = await fetch('./assets/data/custom.geo.json');
 
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.status}`);
@@ -32,20 +32,20 @@ export async function loadGeoJsonData() {
 function processGeoJsonData(data) {
     const countryColors = {};
 
-    // Add ISO_A3 codes to features that might be missing them
+    // Add iso_a3 codes to features that might be missing them
     data.features.forEach(feature => {
         // Ensure properties object exists
         if (!feature.properties) {
             feature.properties = {};
         }
 
-        // If ISO_A3 doesn't exist, add a placeholder code
-        if (!feature.properties.ISO_A3) {
+        // If iso_a3 doesn't exist, add a placeholder code
+        if (!feature.properties.iso_a3) {
             if (feature.properties.code) {
-                feature.properties.ISO_A3 = feature.properties.code;
+                feature.properties.iso_a3 = feature.properties.code;
             } else {
                 // Generate a unique placeholder code
-                feature.properties.ISO_A3 = 'UNK' + Math.floor(Math.random() * 1000);
+                feature.properties.iso_a3 = 'UNK' + Math.floor(Math.random() * 1000);
             }
         }
 
@@ -58,16 +58,16 @@ function processGeoJsonData(data) {
         }
 
         // Ensure population exists
-        if (!feature.properties.POP_EST && !feature.properties.population) {
-            feature.properties.POP_EST = 0;
+        if (!feature.properties.pop_est && !feature.properties.population) {
+            feature.properties.pop_est = 0;
         }
 
         // Generate a color based on population for heatmap mode
-        const population = feature.properties.POP_EST || feature.properties.population || 0;
+        const population = feature.properties.pop_est || feature.properties.population || 0;
         const normalizedPop = Math.min(Math.log(population + 1) / Math.log(1500000000), 1);
 
         // Create both a random color and a heat color
-        countryColors[feature.properties.ISO_A3] = {
+        countryColors[feature.properties.iso_a3] = {
             randomColor: randomColor(),
             heatColor: getHeatmapColor(normalizedPop)
         };
@@ -208,9 +208,9 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "ISO_A3": "USA",
+                    "iso_a3": "USA",
                     "NAME": "United States",
-                    "POP_EST": 331000000,
+                    "pop_est": 331000000,
                     "CONTINENT": "North America"
                 }
             },
@@ -224,9 +224,9 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "ISO_A3": "ESP",
+                    "iso_a3": "ESP",
                     "NAME": "Spain",
-                    "POP_EST": 47000000,
+                    "pop_est": 47000000,
                     "CONTINENT": "Europe"
                 }
             },
@@ -240,9 +240,9 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "ISO_A3": "CHN",
+                    "iso_a3": "CHN",
                     "NAME": "China",
-                    "POP_EST": 1400000000,
+                    "pop_est": 1400000000,
                     "CONTINENT": "Asia"
                 }
             }

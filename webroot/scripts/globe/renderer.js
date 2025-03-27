@@ -308,10 +308,10 @@ function drawCountries(appContext) {
 
     for (const feature of worldData.features) {
         if (feature.geometry.type === 'Polygon') {
-            drawPolygon(appContext, feature.geometry.coordinates, feature.properties.ISO_A3);
+            drawPolygon(appContext, feature.geometry.coordinates, feature.properties.iso_a3);
         } else if (feature.geometry.type === 'MultiPolygon') {
             for (const polygon of feature.geometry.coordinates) {
-                drawPolygon(appContext, polygon, feature.properties.ISO_A3);
+                drawPolygon(appContext, polygon, feature.properties.iso_a3);
             }
         }
     }
@@ -345,7 +345,7 @@ function drawPolygon(appContext, coordinates, countryCode) {
 
     // Check if the polygon is being hovered
     const hoveredCode = hoveredFeature ?
-        (hoveredFeature.properties.code || hoveredFeature.properties.ISO_A3) :
+        (hoveredFeature.properties.code || hoveredFeature.properties.iso_a3) :
         null;
 
     const isHovered = hoveredCode === countryCode;
@@ -437,17 +437,4 @@ function drawPolygon(appContext, coordinates, countryCode) {
         ctx.fill();
         ctx.stroke();
     }
-}
-/**
- * FIX 6: Add a debug function to trace selection state changes
- * Add this to webroot/index.js to help diagnose problems
- */
-// Debug function to monitor selection state
-function debugSelectionState() {
-    console.log("SELECTION STATE:");
-    console.log("Game Active:", window.appContext.gameActive);
-    console.log("Game Selected Countries:", window.appContext.gameSelectedCountries);
-    console.log("Quiz Active:", window.appContext.quizActive);
-    console.log("Quiz Selected Countries:", window.appContext.quizSelectedCountries);
-    console.log("Quiz Correct Countries:", window.appContext.quizCorrectCountries);
 }
