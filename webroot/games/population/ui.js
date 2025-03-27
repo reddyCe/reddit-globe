@@ -186,6 +186,8 @@ export function showRoundResults(targetPopulation, totalPopulation, difference, 
         document.body.removeChild(modal);
     });
 
+    buttonContainer.style.justifyContent = 'flex-end';
+
     buttonContainer.appendChild(closeBtn);
     modal.appendChild(buttonContainer);
 

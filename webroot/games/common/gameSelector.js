@@ -45,18 +45,18 @@ export function initGameSelector(appContext) {
         }
     });
 
-    quizBlock.addEventListener('click', () => {
-        if (!appContext.quizActive) {
-            // Start the quiz game and hide the selector
-            appContext.startQuizGame();
-            gameSelector.style.opacity = '0';
-            setTimeout(() => {
-                gameSelector.style.display = 'none';
-            }, 300);
-        } else {
-            appContext.quitQuizGame();
-        }
-    });
+    // quizBlock.addEventListener('click', () => {
+    //     if (!appContext.quizActive) {
+    //         // Start the quiz game and hide the selector
+    //         appContext.startQuizGame();
+    //         gameSelector.style.opacity = '0';
+    //         setTimeout(() => {
+    //             gameSelector.style.display = 'none';
+    //         }, 300);
+    //     } else {
+    //         appContext.quitQuizGame();
+    //     }
+    // });
 
     // Set up listener for score updates
     window.addEventListener('message', function (event) {

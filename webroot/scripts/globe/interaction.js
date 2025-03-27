@@ -523,7 +523,7 @@ function processPointForHover(clientX, clientY, appContext) {
 
             // Get property names based on GeoJSON structure
             const name = feature.properties.name || feature.properties.NAME || "Unknown";
-            const code = feature.properties.code || feature.properties.iso_a3 || "Unknown";
+            const code = feature.properties.code || feature.properties.adm0_a3_gb || "Unknown";
 
             // Show tooltip with country info
             showTooltip({
@@ -585,7 +585,7 @@ function handleGlobeClick(e, appContext) {
                 lat: clickLatLng.lat,
                 lng: clickLatLng.lng,
                 name: feature.properties.name || feature.properties.NAME || "Unknown",
-                code: feature.properties.code || feature.properties.iso_a3 || "Unknown",
+                code: feature.properties.code || feature.properties.adm0_a3_gb || "Unknown",
                 details: `Population: ${formatNumber(feature.properties.population || feature.properties.pop_est)}, ` +
                     `Continent: ${feature.properties.continent || feature.properties.CONTINENT || "Unknown"}`
             };

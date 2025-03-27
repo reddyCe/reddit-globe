@@ -90,7 +90,7 @@ function startNewGame(appContext) {
  */
 function handleCountrySelection(feature, appContext) {
     // Get country information
-    const countryCode = feature.properties.code || feature.properties.iso_a3;
+    const countryCode = feature.properties.code || feature.properties.adm0_a3_gb;
     const countryName = feature.properties.name || feature.properties.NAME;
     const population = feature.properties.population || feature.properties.pop_est || 0;
 

@@ -308,10 +308,10 @@ function drawCountries(appContext) {
 
     for (const feature of worldData.features) {
         if (feature.geometry.type === 'Polygon') {
-            drawPolygon(appContext, feature.geometry.coordinates, feature.properties.iso_a3);
+            drawPolygon(appContext, feature.geometry.coordinates, feature.properties.adm0_a3_gb);
         } else if (feature.geometry.type === 'MultiPolygon') {
             for (const polygon of feature.geometry.coordinates) {
-                drawPolygon(appContext, polygon, feature.properties.iso_a3);
+                drawPolygon(appContext, polygon, feature.properties.adm0_a3_gb);
             }
         }
     }
@@ -345,7 +345,7 @@ function drawPolygon(appContext, coordinates, countryCode) {
 
     // Check if the polygon is being hovered
     const hoveredCode = hoveredFeature ?
-        (hoveredFeature.properties.code || hoveredFeature.properties.iso_a3) :
+        (hoveredFeature.properties.code || hoveredFeature.properties.adm0_a3_gb) :
         null;
 
     const isHovered = hoveredCode === countryCode;

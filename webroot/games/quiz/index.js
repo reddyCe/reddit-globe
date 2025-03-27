@@ -86,7 +86,7 @@ function startQuizGame(appContext) {
  */
 function handleQuizCountrySelection(feature, appContext) {
     // Get country information
-    const countryCode = feature.properties.code || feature.properties.ISO_A3;
+    const countryCode = feature.properties.code || feature.properties.adm0_a3_gb;
     const countryName = feature.properties.name || feature.properties.NAME;
 
     // Check if country is already selected

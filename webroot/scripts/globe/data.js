@@ -40,12 +40,12 @@ function processGeoJsonData(data) {
         }
 
         // If iso_a3 doesn't exist, add a placeholder code
-        if (!feature.properties.iso_a3) {
+        if (!feature.properties.adm0_a3_gb) {
             if (feature.properties.code) {
-                feature.properties.iso_a3 = feature.properties.code;
+                feature.properties.adm0_a3_gb = feature.properties.code;
             } else {
                 // Generate a unique placeholder code
-                feature.properties.iso_a3 = 'UNK' + Math.floor(Math.random() * 1000);
+                feature.properties.adm0_a3_gb = 'UNK' + Math.floor(Math.random() * 1000);
             }
         }
 
@@ -67,7 +67,7 @@ function processGeoJsonData(data) {
         const normalizedPop = Math.min(Math.log(population + 1) / Math.log(1500000000), 1);
 
         // Create both a random color and a heat color
-        countryColors[feature.properties.iso_a3] = {
+        countryColors[feature.properties.adm0_a3_gb] = {
             randomColor: randomColor(),
             heatColor: getHeatmapColor(normalizedPop)
         };
@@ -208,7 +208,7 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "iso_a3": "USA",
+                    "adm0_a3_gb": "USA",
                     "NAME": "United States",
                     "pop_est": 331000000,
                     "CONTINENT": "North America"
@@ -224,7 +224,7 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "iso_a3": "ESP",
+                    "adm0_a3_gb": "ESP",
                     "NAME": "Spain",
                     "pop_est": 47000000,
                     "CONTINENT": "Europe"
@@ -240,7 +240,7 @@ function createFallbackGeoData() {
                     ]]
                 },
                 "properties": {
-                    "iso_a3": "CHN",
+                    "adm0_a3_gb": "CHN",
                     "NAME": "China",
                     "pop_est": 1400000000,
                     "CONTINENT": "Asia"
