@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="fix result">
+      <change afterPath="$PROJECT_DIR$/webroot/scripts/planeAnimation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/webroot/styles/plane-animation.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/redisService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/redisService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Leaderboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Leaderboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,11 +229,6 @@
           <url>file://$PROJECT_DIR$/webroot/scripts/games/population/game.js</url>
           <line>38</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/webroot/scripts/globe/renderer.js</url>
-          <line>325</line>
-          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

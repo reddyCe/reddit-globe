@@ -1,5 +1,5 @@
 /**
- * Globe interaction module - IMPROVED VERSION
+ * Globe interaction module - IMPROVED VERSION (Touchpad-Optimized)
  * Handles mouse and touch interactions with the globe
  */
 import {hideTooltip, showTooltip} from '../../components/tooltip.js';
@@ -7,10 +7,10 @@ import {hideTooltip, showTooltip} from '../../components/tooltip.js';
 // Constants for interactions
 const MIN_ZOOM = 0.5;  // Half size
 const MAX_ZOOM = 70.0;  // 7x size
-const ZOOM_SPEED = 0.1; // Original zoom speed value (restored)
-const DRAG_THRESHOLD = 3; // pixels - reduced for more responsive dragging
+const ZOOM_SPEED = 0.07; // Adjusted zoom speed for better touchpad feel - lower value
+const DRAG_THRESHOLD = 1; // pixels - reduced for more responsive dragging (even more)
 const CLICK_TIMEOUT = 250; // milliseconds
-const ROTATION_INERTIA = 0.92; // Higher values = longer spin (0.95 = long, 0.8 = short)
+const ROTATION_INERTIA = 0.95; // Higher values = longer spin (0.95 = long, 0.8 = short) - increase a little bit
 const MAX_ROTATION_SPEED = 0.03; // Prevent too fast rotation
 
 // Interaction state
@@ -99,18 +99,18 @@ function handleMouseMove(e, appContext) {
         }
 
         // Calculate rotation delta with damping for smoother control
-        const damping = Math.min(1.0, timeElapsed / 200); // Gradual increase in responsiveness
+        const damping = Math.min(1.0, timeElapsed / 150); // Gradual increase in responsiveness - refined damping
         // Apply inverse zoom scaling to rotation - slower rotation when zoomed in
         const zoomFactor = 1 / Math.max(1, appContext.zoomScale);
-        const rotXDelta = deltaY * 0.01 * damping * zoomFactor;
-        const rotYDelta = deltaX * 0.01 * damping * zoomFactor;
+        const rotXDelta = deltaY * 0.009 * damping * zoomFactor; // Adjusted sensitivity
+        const rotYDelta = deltaX * 0.009 * damping * zoomFactor; // Adjusted sensitivity
         // Update rotation
         appContext.rotation.y += rotYDelta;
         appContext.rotation.x += rotXDelta;
 
         // Update velocity for inertia - weighted average with previous velocity
-        rotationVelocity.x = rotationVelocity.x * 0.8 + rotXDelta * 0.2;
-        rotationVelocity.y = rotationVelocity.y * 0.8 + rotYDelta * 0.2;
+        rotationVelocity.x = rotationVelocity.x * 0.75 + rotXDelta * 0.25; // Adjusted weight
+        rotationVelocity.y = rotationVelocity.y * 0.75 + rotYDelta * 0.25; // Adjusted weight
 
         // Limit rotation velocity
         rotationVelocity.x = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.x));
@@ -266,21 +266,21 @@ function handleTouchMove(e, appContext) {
         }
 
         // Calculate rotation delta with damping for smoother control
-        const damping = Math.min(1.0, timeElapsed / 200); // Gradual increase in responsiveness
+        const damping = Math.min(1.0, timeElapsed / 150); // Gradual increase in responsiveness - refined damping
 
         // Apply inverse zoom scaling to rotation - slower rotation when zoomed in
         const zoomFactor = 0.8 / Math.max(1, appContext.zoomScale);
 
-        const rotXDelta = deltaY * 0.01 * damping * zoomFactor;
-        const rotYDelta = deltaX * 0.01 * damping * zoomFactor;
+        const rotXDelta = deltaY * 0.009 * damping * zoomFactor; // Adjusted sensitivity
+        const rotYDelta = deltaX * 0.009 * damping * zoomFactor; // Adjusted sensitivity
 
         // Update rotation
         appContext.rotation.y += rotYDelta;
         appContext.rotation.x += rotXDelta;
 
         // Update velocity for inertia
-        rotationVelocity.x = rotationVelocity.x * 0.8 + rotXDelta * 0.2;
-        rotationVelocity.y = rotationVelocity.y * 0.8 + rotYDelta * 0.2;
+        rotationVelocity.x = rotationVelocity.x * 0.75 + rotXDelta * 0.25; // Adjusted weight
+        rotationVelocity.y = rotationVelocity.y * 0.75 + rotYDelta * 0.25; // Adjusted weight
 
         // Limit rotation velocity
         rotationVelocity.x = Math.max(-MAX_ROTATION_SPEED, Math.min(MAX_ROTATION_SPEED, rotationVelocity.x));
