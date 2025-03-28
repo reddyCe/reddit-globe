@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="fix result">
-      <change afterPath="$PROJECT_DIR$/webroot/scripts/planeAnimation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/webroot/styles/plane-animation.css" afterDir="false" />
+    <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="plane animation and controls">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/planeAnimation.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/planeAnimation.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -195,7 +191,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743109466225</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="plane animation and controls">
+      <option name="closed" value="true" />
+      <created>1743160700458</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1743160700458</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -209,7 +213,8 @@
     <MESSAGE value="refactor and fixes" />
     <MESSAGE value="fix rotation" />
     <MESSAGE value="fix result" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix result" />
+    <MESSAGE value="plane animation and controls" />
+    <option name="LAST_COMMIT_MESSAGE" value="plane animation and controls" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

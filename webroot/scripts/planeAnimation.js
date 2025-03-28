@@ -262,7 +262,7 @@ function calculateHeading(lat1, lng1, lat2, lng2, progress) {
     let angle = Math.atan2(y, x) * 180 / Math.PI;
 
     // Add 90 degrees because the plane emoji naturally points to the right
-    angle -= 90;
+    angle -= 45;
 
     return angle;
 }
