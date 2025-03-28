@@ -5,6 +5,7 @@
 import {GameState} from './state.js';
 import {initGameUI, updateGameUI, showRoundResults, showAnimatedTarget, showToast} from './ui.js';
 import {calculateScore, getRandomTarget, formatNumber} from './game.js';
+import {sendGameResults} from '../../scripts/communication.js';
 
 let gameState;
 
@@ -142,18 +143,9 @@ function finishRound(appContext) {
     // Show round results
     showRoundResults(gameState.targetPopulation, totalPopulation, difference, roundScore, gameState.score);
 
-    // Send game results to parent
-    window.parent.postMessage(
-        {
-            type: 'gameFinished',
-            data: {
-                roundScore: roundScore
-            }
-        },
-        '*'
-    );
+    // Send game results using the communication layer
+    sendGameResults(roundScore);
 }
-
 /**
  * Reset current selections
  * @param {Object} appContext - Application context

@@ -7,16 +7,11 @@
     <list default="true" id="93c33102-e0a4-471e-99e8-e70ba8faf818" name="Changes" comment="fix result">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/assets/data/custom.geo.json" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/assets/data/custom.geo.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/games/common/gameSelector.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/common/gameSelector.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/redisService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/redisService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webroot/games/population/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/games/population/ui.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/ui.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/games/quiz/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/quiz/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/page.html" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/data.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/data.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/globe/renderer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/styles/components.css" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/styles/components.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/games/population/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/state.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webroot/scripts/communication.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/communication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1740832562486</updated>
       <workItem from="1740832563522" duration="51269000" />
-      <workItem from="1743106858346" duration="2565000" />
+      <workItem from="1743106858346" duration="4603000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -193,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743108158326</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="fix result">
+      <option name="closed" value="true" />
+      <created>1743109466225</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743109466225</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

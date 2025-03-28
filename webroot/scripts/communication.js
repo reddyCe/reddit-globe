@@ -36,28 +36,38 @@ export function initCommunication(appContext) {
  * @param {MessageEvent} event - Message event
  * @param {Object} appContext - Application context
  */
+
 function handleDevvitMessage(event, appContext) {
-    // Reserved type for messages sent via `context.ui.webView.postMessage`
-    if (event.data.type !== 'devvit-message') return;
+    // Log the entire event for debugging
+    console.log('Received event:', event);
 
-    const {message} = event.data.data;
-    console.log('Received message from Devvit:', message);
+    // Check if we have valid data structure before proceeding
+    if (!event || !event.data) {
+        console.error('Invalid event received');
+        return;
+    }
 
+    // Check if it's a Devvit message - if not, we might need to handle it differently
+    if (event.data.type !== 'devvit-message') {
+        console.log('Non-Devvit message received:', event.data);
+        return;
+    }
+
+    // Safely extract the message
+    const messageData = event.data.data;
+    if (!messageData || !messageData.message) {
+        console.error('Invalid message data structure:', messageData);
+        return;
+    }
+
+    const message = messageData.message;
+    console.log('Processing Devvit message:', message);
+
+    // Now proceed with your switch statement
     switch (message.type) {
-        case 'initialData':
-            handleInitialData(message.data, appContext);
-            break;
-
-        case 'locationUpdated':
-            handleLocationUpdated(message.data, appContext);
-            break;
-
-        default:
-            console.warn('Unknown message type received:', message.type);
-            break;
+        // Your existing code
     }
 }
-
 /**
  * Handle initial data from Devvit
  * @param {Object} data - Initial data
@@ -102,10 +112,14 @@ export function postMessageToDevvit(message) {
  * @param {number} score - Game score
  */
 export function sendGameResults(score) {
-    postMessageToDevvit({
+    // Create a properly formatted message
+    const message = {
         type: 'gameFinished',
         data: {
             roundScore: score
         }
-    });
+    };
+
+    console.log('Sending game results to Devvit:', message);
+    parent.postMessage(message, '*');
 }

@@ -14,7 +14,7 @@ export class GameState {
         this.targetPopulation = 0;
         this.score = 0;
         this.round = 0;
-        this.maxCountries = Math.floor(Math.random() * 2) + 3; // 3-4 countries
+        this.maxCountries = 4; // Always require exactly 4 countries
         this.streak = 0;
     }
 
