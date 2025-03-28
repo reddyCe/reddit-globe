@@ -46,11 +46,9 @@ export function Leaderboard(props: LeaderboardProps) {
 
     return (
         <vstack
-            padding="medium"
-            margin="medium"
+            padding="large"
             border="thin"
-            cornerRadius="medium"
-            background="secondary">
+            cornerRadius="medium">
 
             <hstack alignment="center middle" width="100%">
                 <text size="large" weight="bold" align="center">{title}</text>
@@ -68,30 +66,34 @@ export function Leaderboard(props: LeaderboardProps) {
                 )}
             </hstack>
 
+            <spacer size="medium"/>
+
             {
                 isLoading ? (
                     <vstack padding="medium" alignment="middle center">
                         <text>Loading...</text>
                     </vstack>
                 ) : entries.length > 0 ? (
-                    entries.map((entry, index) => (
-                        <hstack
-                            key={entry.userId}
-                            padding="small"
-                            border={index < entries.length - 1 ? "bottom" : "none"}
-                            background={currentUserId === entry.userId ? "accent" : undefined}>
+                    <vstack border="thin" cornerRadius="small" overflow="hidden">
+                        {entries.map((entry, index) => (
+                            <hstack
+                                key={entry.userId}
+                                padding="small"
+                                border={index < entries.length - 1 ? "bottom" : "none"}
+                                background={currentUserId === entry.userId ? "accent" : undefined}>
 
-                            <text size="medium" weight="bold">{index + 1}.</text>
-                            <spacer size="small"/>
-                            <text
-                                size="medium"
-                                weight={currentUserId === entry.userId ? "bold" : "normal"}>
-                                {entry.username}
-                            </text>
-                            <spacer grow/>
-                            <text size="medium" weight="bold">{entry.score}</text>
-                        </hstack>
-                    ))
+                                <text size="medium" weight="bold">{index + 1}.</text>
+                                <spacer size="small"/>
+                                <text
+                                    size="medium"
+                                    weight={currentUserId === entry.userId ? "bold" : "normal"}>
+                                    {entry.username}
+                                </text>
+                                <spacer grow/>
+                                <text size="medium" weight="bold">{entry.score}</text>
+                            </hstack>
+                        ))}
+                    </vstack>
                 ) : (
                     <vstack padding="medium" alignment="middle center">
                         <text align="center">No scores yet.</text>

@@ -126,7 +126,7 @@ Devvit.addCustomPostType({
             break;
 
           case 'gameFinished':
-            try {
+
               const roundScore = message.data.roundScore;
 
               // Check if this is a new high score
@@ -143,16 +143,10 @@ Devvit.addCustomPostType({
               setIsNewHighScore(isNewRecord);
               setGameJustFinished(true);
 
-              // Close the webView to return to the main UI
-                webView.close();
-
               // Refresh the leaderboard data
                 const refreshedLeaderboard = await redisService.getLeaderboard();
               setLeaderboard(refreshedLeaderboard);
-            } catch (error) {
-              console.error('Error saving score:', error);
-              context.ui.showToast('Error saving score. Please try again.');
-            }
+
             break;
 
           default:
@@ -186,29 +180,29 @@ Devvit.addCustomPostType({
           ) : (
               /* User info and Play button */
               <vstack padding="medium" spacing="medium" alignment="middle center">
-                <hstack spacing="small">
-                  <text size="medium">Welcome,</text>
-                  <text size="medium" weight="bold">{username}</text>
-                </hstack>
+                  <hstack spacing="small">
+                      <text size="medium">Welcome,</text>
+                      <text size="medium" weight="bold">{username}</text>
+                  </hstack>
 
-                {score > 0 && (
-                    <hstack>
-                      <text size="medium">Your Best Score:</text>
-                      <spacer size="xsmall" />
-                      <text size="large" weight="bold" color="white">{score}</text>
-                    </hstack>
-                )}
-
-                <button
-                    onPress={() => webView.mount()}
-                    color="brand"
-                    size="large">
-                  Play
-                </button>
+                  {score > 0 && (
+                      <hstack>
+                          <text size="medium">Your Best Score:</text>
+                          <spacer size="xsmall"/>
+                          <text size="large" weight="bold" color="white">{score}</text>
+                      </hstack>
+                  )}
+                  <spacer size="small"/>
+                  <button
+                      onPress={() => webView.mount()}
+                      color="brand"
+                      size="large">
+                      Play
+                  </button>
               </vstack>
           )}
 
-          {/* Always visible leaderboard */}
+            {/* Always visible leaderboard */}
             <Leaderboard
                 title="Leaderboard"
                 entries={leaderboard}

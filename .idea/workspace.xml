@@ -8,10 +8,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devvit.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/devvit.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/redisService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/redisService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Leaderboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Leaderboard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/games/population/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/games/population/state.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/games/population/state.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webroot/scripts/communication.js" beforeDir="false" afterPath="$PROJECT_DIR$/webroot/scripts/communication.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

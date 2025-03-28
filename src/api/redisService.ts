@@ -41,21 +41,14 @@ export class RedisService {
      * @returns True if successful
      */
     async saveUserScore(userId: string, username: string, score: number): Promise<boolean> {
-        try {
-            // Save score
-            await this.redis.set(`score_${userId}`, score.toString());
 
+        // Save score
+            await this.redis.set(`score_${userId}`, score.toString());
             // Save username for leaderboard
             await this.redis.set(`username_${userId}`, username);
-
             // Add user to the list of users with scores if not already there
             await this.addUserToLeaderboard(userId);
-
             return true;
-        } catch (error) {
-            console.error('Error saving user score:', error);
-            return false;
-        }
     }
 
     /**
@@ -63,8 +56,8 @@ export class RedisService {
      * @param userId - User ID
      */
     private async addUserToLeaderboard(userId: string): Promise<void> {
-        try {
-            const userIdsStr = await this.redis.get('globe_explorer_users');
+
+        const userIdsStr = await this.redis.get('globe_explorer_users');
             let userIds: string[] = [];
 
             if (userIdsStr) {
@@ -77,9 +70,7 @@ export class RedisService {
             }
 
             await this.redis.set('globe_explorer_users', JSON.stringify(userIds));
-        } catch (error) {
-            console.error('Error adding user to leaderboard:', error);
-        }
+
     }
 
     /**
@@ -88,8 +79,8 @@ export class RedisService {
      * @returns Leaderboard data sorted by score
      */
     async getLeaderboard(limit: number = 10): Promise<LeaderboardEntry[]> {
-        try {
-            // Get the list of all users who have scores
+
+        // Get the list of all users who have scores
             const userIdsStr = await this.redis.get('globe_explorer_users');
             if (!userIdsStr) return [];
 
@@ -114,10 +105,7 @@ export class RedisService {
             return leaderboardData
                 .sort((a, b) => b.score - a.score)
                 .slice(0, limit);
-        } catch (error) {
-            console.error('Error fetching leaderboard:', error);
-            return [];
-        }
+
     }
 
     /**
@@ -127,16 +115,13 @@ export class RedisService {
      * @returns True if successful
      */
     async saveLocation(postId: string, location: any): Promise<boolean> {
-        try {
-            await this.redis.set(
+
+        await this.redis.set(
                 `lastLocation_${postId}`,
                 JSON.stringify(location)
             );
             return true;
-        } catch (error) {
-            console.error('Error saving location:', error);
-            return false;
-        }
+
     }
 
     /**
@@ -145,13 +130,10 @@ export class RedisService {
      * @returns Location data or null if not found
      */
     async getLocation(postId: string): Promise<any | null> {
-        try {
-            const savedLocation = await this.redis.get(`lastLocation_${postId}`);
+
+        const savedLocation = await this.redis.get(`lastLocation_${postId}`);
             return savedLocation ? JSON.parse(savedLocation) : null;
-        } catch (error) {
-            console.error('Error getting location:', error);
-            return null;
-        }
+
     }
 }
 
